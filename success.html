@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thank You — M&amp;T Services</title>
+  <meta name="robots" content="noindex" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Sora:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .ty-wrap { min-height: 100vh; display: grid; place-items: center; text-align: center; padding: 2rem; }
+    .ty-card { max-width: 560px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 3rem 2.4rem; box-shadow: var(--shadow); }
+    .ty-check { width: 84px; height: 84px; margin: 0 auto 1.6rem; border-radius: 50%; display: grid; place-items: center; background: var(--grad); color: #04111f; font-size: 2.6rem; font-weight: 800; box-shadow: 0 14px 40px -8px rgba(6,214,196,.6); }
+    .ty-card h1 { font-family: var(--display); font-size: clamp(1.8rem, 4vw, 2.6rem); letter-spacing: -.02em; margin-bottom: 1rem; }
+    .ty-card h1 .grad-text { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .ty-card p { color: var(--muted); font-size: 1.05rem; margin-bottom: 1rem; }
+    .ty-contact { color: var(--faint); font-size: .95rem; margin: 1.4rem 0 2rem; }
+    .ty-contact a { color: var(--accent-2); }
+  </style>
+</head>
+<body>
+  <div class="bg-fx" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="grid-overlay"></div>
+  </div>
+
+  <div class="ty-wrap">
+    <div class="ty-card">
+      <div class="ty-check">✓</div>
+      <h1>Thank you! <span class="grad-text">We got it.</span></h1>
+      <p>Your request has been sent to the M&amp;T Services team. We'll reach out shortly to schedule your free website &amp; AI consultation.</p>
+      <p class="ty-contact">
+        Need us sooner? Email <a href="mailto:mylesjwells@mtservicesusa.com">mylesjwells@mtservicesusa.com</a><br />
+        or call Mylo (270) 570-0790 &nbsp;·&nbsp; Trey (270) 231-1173
+      </p>
+      <a href="/" class="btn btn-primary btn-lg">&larr; Back to home</a>
+    </div>
+  </div>
+</body>
+</html>
