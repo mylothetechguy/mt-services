@@ -1,0 +1,61 @@
+/* ===== NAV SCROLL ===== */
+const nav = document.getElementById('nav');
+const navToggle = document.getElementById('navToggle');
+const navLinks = document.getElementById('navLinks');
+
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+});
+
+navToggle.addEventListener('click', () => {
+  const open = navLinks.classList.toggle('open');
+  navToggle.classList.toggle('open', open);
+  navToggle.setAttribute('aria-expanded', open);
+});
+
+navLinks.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+    navToggle.classList.remove('open');
+    navToggle.setAttribute('aria-expanded', 'false');
+  });
+});
+
+/* ===== REVEAL ON SCROLL ===== */
+const revealEls = document.querySelectorAll('.reveal');
+
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      const delay = entry.target.dataset.delay || 0;
+      setTimeout(() => {
+        entry.target.classList.add('in-view');
+      }, delay);
+      io.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+revealEls.forEach((el, i) => {
+  const siblings = el.parentElement.querySelectorAll('.reveal');
+  const sibIndex = Array.from(siblings).indexOf(el);
+  el.dataset.delay = sibIndex * 80;
+  io.observe(el);
+});
+
+/* ===== CONTACT FORM ===== */
+const form = document.getElementById('contactForm');
+if (form) {
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const btn = form.querySelector('button[type=submit]');
+    btn.textContent = '✅ Request Sent — We\'ll be in touch!';
+    btn.disabled = true;
+    btn.style.background = 'var(--green-mid)';
+    form.reset();
+  });
+}
+
+/* ===== FOOTER YEAR ===== */
+const yearEl = document.getElementById('year');
+if (yearEl) yearEl.textContent = new Date().getFullYear();
