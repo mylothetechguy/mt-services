@@ -105,7 +105,7 @@
     if (/(seo|google|rank|search|traffic)/.test(s))
       return "We offer <strong>SEO Optimization ($200–500/mo)</strong> to help the right customers find you on Google. It pairs perfectly with a new site build.";
     if (/(contact|call|book|consult|talk|email|phone|appointment)/.test(s))
-      return "Let's talk! 📅 Book a <strong>free consultation</strong> by filling out the form on this page, emailing <a href='mailto:mylesjwells@mtservicesusa.com'>mylesjwells@mtservicesusa.com</a>, or calling Myles Wells at (270) 570-0790 or Trey Williams at (270) 231-1173.";
+      return "Let's talk! 📅 Book a <strong>free consultation</strong> by filling out the form on this page, emailing <a href='mailto:mylothetechguy@gmail.com'>mylothetechguy@gmail.com</a>, or calling Myles Wells at (270) 570-0790 or Trey Williams at (270) 231-1173.";
     if (/(hi|hello|hey|yo|sup|howdy)/.test(s))
       return "Hey there! 👋 I can tell you about our websites, AI assistants, pricing, or help you book a free consultation. What are you curious about?";
     if (/(who|what.*you.*do|services|offer)/.test(s))
