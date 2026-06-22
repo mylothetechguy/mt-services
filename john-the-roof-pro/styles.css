@@ -235,6 +235,129 @@ h1, h2, h3 { font-family: 'Plus Jakarta Sans', sans-serif; line-height: 1.12; }
 .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
 .reveal.in-view { opacity: 1; transform: translateY(0); }
 
+/* ===== ENROLL / PRICING ===== */
+.enroll { position: relative; background: radial-gradient(120% 100% at 50% 0%, var(--navy-800) 0%, var(--navy-900) 50%, var(--navy-950) 100%); overflow: hidden; }
+.enroll-bg { position: absolute; inset: 0; background: radial-gradient(60% 60% at 85% 10%, rgba(246,166,35,0.12) 0%, transparent 60%); pointer-events: none; }
+.plans-grid { position: relative; z-index: 2; display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; align-items: stretch; }
+.plan-card {
+  position: relative; display: flex; flex-direction: column;
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius-lg); padding: 34px 30px; transition: all var(--transition);
+}
+.plan-card:hover { transform: translateY(-6px); border-color: rgba(246,166,35,0.35); background: rgba(255,255,255,0.06); }
+.plan-card--featured { background: rgba(246,166,35,0.07); border: 2px solid var(--amber); box-shadow: 0 18px 50px rgba(246,166,35,0.18); }
+.plan-badge { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--amber), var(--amber-bright)); color: var(--navy-950); font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 0.72rem; letter-spacing: 0.05em; text-transform: uppercase; padding: 6px 16px; border-radius: 50px; white-space: nowrap; }
+.plan-top { padding-bottom: 22px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 22px; }
+.plan-name { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--amber); }
+.plan-price { display: flex; align-items: baseline; gap: 8px; margin: 12px 0 6px; }
+.pp-amt { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 2.6rem; color: var(--white); line-height: 1; }
+.pp-per { color: var(--slate-400); font-size: 0.9rem; }
+.plan-tag { color: var(--slate-400); font-size: 0.95rem; }
+.plan-feats { display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px; flex: 1; }
+.plan-feats li { position: relative; padding-left: 28px; color: rgba(255,255,255,0.82); font-size: 0.95rem; }
+.plan-feats li strong { color: var(--white); }
+.plan-feats li::before { content: '✓'; position: absolute; left: 0; top: 0; width: 18px; height: 18px; display: inline-flex; align-items: center; justify-content: center; background: rgba(246,166,35,0.18); color: var(--amber); border-radius: 50%; font-size: 0.7rem; font-weight: 800; }
+.btn-outline-dark { background: rgba(255,255,255,0.05); color: var(--white); border: 1.5px solid rgba(255,255,255,0.25); }
+.btn-outline-dark:hover { background: rgba(255,255,255,0.12); border-color: var(--amber); transform: translateY(-2px); }
+.enroll-fine { position: relative; z-index: 2; text-align: center; color: var(--slate-400); font-size: 0.95rem; margin-top: 36px; }
+.enroll-fine a { color: var(--amber); font-weight: 600; }
+.enroll-fine a:hover { text-decoration: underline; }
+
+/* ===== CHECKOUT MODAL ===== */
+.checkout-overlay {
+  position: fixed; inset: 0; z-index: 200; display: flex; align-items: center; justify-content: center;
+  padding: 20px; background: rgba(7,11,24,0.72); backdrop-filter: blur(6px);
+  opacity: 0; visibility: hidden; transition: opacity var(--transition), visibility var(--transition);
+}
+.checkout-overlay.open { opacity: 1; visibility: visible; }
+.checkout-modal {
+  position: relative; width: 100%; max-width: 460px; max-height: 92vh; overflow-y: auto;
+  background: var(--white); border-radius: var(--radius-lg); padding: 36px 32px;
+  box-shadow: var(--shadow-lg); transform: translateY(24px) scale(0.98); transition: transform var(--transition);
+}
+.checkout-overlay.open .checkout-modal { transform: translateY(0) scale(1); }
+.checkout-close { position: absolute; top: 16px; right: 18px; font-size: 1.8rem; line-height: 1; color: var(--text-muted); transition: color var(--transition); }
+.checkout-close:hover { color: var(--text-dark); }
+.checkout-steps { display: flex; align-items: center; gap: 8px; margin-bottom: 26px; }
+.cs-step { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 0.78rem; color: var(--text-muted); transition: color var(--transition); }
+.cs-step.is-active { color: var(--amber); }
+.cs-step.is-done { color: var(--text-dark); }
+.cs-line { flex: 1; height: 2px; background: var(--gray-200); border-radius: 2px; }
+.checkout-h { font-size: 1.4rem; font-weight: 800; color: var(--text-dark); margin-bottom: 18px; }
+.order-summary { background: var(--gray-50); border: 1px solid var(--gray-100); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 22px; }
+.os-row { display: flex; align-items: center; justify-content: space-between; }
+.os-label { color: var(--text-muted); font-size: 0.9rem; }
+.os-plan { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; color: var(--text-dark); }
+.os-total { margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--gray-200); }
+.os-total span:first-child { font-weight: 600; color: var(--text-mid); }
+.os-amt { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 1.25rem; color: var(--text-dark); }
+.order-summary--slim { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; }
+.card-input { position: relative; }
+.card-input input { padding-right: 120px; }
+.card-brands { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); font-size: 0.68rem; font-weight: 700; color: var(--text-muted); letter-spacing: 0.02em; pointer-events: none; }
+.checkout-back { display: block; width: 100%; text-align: center; margin-top: 14px; color: var(--text-muted); font-weight: 600; font-size: 0.9rem; }
+.checkout-back:hover { color: var(--text-dark); }
+.checkout-secure { text-align: center; font-size: 0.78rem; color: var(--text-muted); margin-top: 14px; }
+.checkout-success { text-align: center; padding: 14px 0 4px; }
+.success-check { width: 68px; height: 68px; margin: 0 auto 18px; border-radius: 50%; background: linear-gradient(135deg, #1FBF75, #28D17C); color: #fff; font-size: 2rem; font-weight: 800; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(40,209,124,0.4); }
+.success-sub { color: var(--text-body); margin-bottom: 18px; }
+.success-plan { display: inline-block; background: var(--gray-50); border: 1px solid var(--gray-100); border-radius: 50px; padding: 8px 20px; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; color: var(--text-dark); margin-bottom: 24px; }
+.checkout-modal .field-row { margin-bottom: 0; }
+
+/* ===== AI CHAT WIDGET ===== */
+.chat-widget { position: fixed; bottom: 24px; right: 24px; z-index: 180; }
+.chat-launcher {
+  position: relative; width: 62px; height: 62px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--amber), var(--amber-bright)); color: var(--navy-950);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 12px 34px rgba(246,166,35,0.5); transition: transform var(--transition); margin-left: auto;
+}
+.chat-launcher:hover { transform: scale(1.06); }
+.chat-launcher svg { width: 28px; height: 28px; }
+.chat-launcher .cl-close { display: none; }
+.chat-widget.open .chat-launcher .cl-open { display: none; }
+.chat-widget.open .chat-launcher .cl-close { display: block; }
+.chat-ping { position: absolute; top: 2px; right: 2px; width: 13px; height: 13px; border-radius: 50%; background: #28D17C; border: 2px solid var(--white); }
+.chat-widget.open .chat-ping { display: none; }
+
+.chat-panel {
+  position: absolute; bottom: 78px; right: 0; width: 370px; max-width: calc(100vw - 32px);
+  background: var(--white); border-radius: var(--radius-lg); overflow: hidden;
+  box-shadow: var(--shadow-lg); display: flex; flex-direction: column; height: 520px; max-height: calc(100vh - 130px);
+  opacity: 0; visibility: hidden; transform: translateY(16px) scale(0.97); transform-origin: bottom right;
+  transition: opacity var(--transition), visibility var(--transition), transform var(--transition);
+}
+.chat-widget.open .chat-panel { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+.chat-header { display: flex; align-items: center; gap: 12px; padding: 16px 18px; background: radial-gradient(120% 120% at 0% 0%, var(--navy-800), var(--navy-950)); }
+.ch-avatar { width: 40px; height: 40px; border-radius: 12px; background: rgba(246,166,35,0.16); color: var(--amber); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.ch-avatar svg { width: 22px; height: 22px; }
+.ch-meta strong { display: block; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; color: var(--white); font-size: 1rem; }
+.ch-meta span { display: flex; align-items: center; gap: 6px; color: var(--slate-400); font-size: 0.78rem; }
+.ch-dot { width: 7px; height: 7px; border-radius: 50%; background: #28D17C; box-shadow: 0 0 0 3px rgba(40,209,124,0.25); }
+.chat-body { flex: 1; overflow-y: auto; padding: 18px; display: flex; flex-direction: column; gap: 12px; background: var(--gray-50); }
+.chat-msg { max-width: 84%; }
+.chat-msg p { padding: 11px 15px; border-radius: 14px; font-size: 0.9rem; line-height: 1.5; }
+.chat-msg.bot { align-self: flex-start; }
+.chat-msg.bot p { background: var(--white); color: var(--text-body); border: 1px solid var(--gray-100); border-bottom-left-radius: 4px; }
+.chat-msg.bot p strong { color: var(--text-dark); }
+.chat-msg.bot p a { color: var(--amber); font-weight: 700; }
+.chat-msg.user { align-self: flex-end; }
+.chat-msg.user p { background: linear-gradient(135deg, var(--amber), var(--amber-bright)); color: var(--navy-950); font-weight: 500; border-bottom-right-radius: 4px; }
+.chat-typing p { display: inline-flex; gap: 4px; }
+.chat-typing span { width: 7px; height: 7px; border-radius: 50%; background: var(--slate-400); animation: chatDot 1.2s infinite ease-in-out; }
+.chat-typing span:nth-child(2) { animation-delay: 0.2s; }
+.chat-typing span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes chatDot { 0%, 60%, 100% { opacity: 0.3; transform: translateY(0); } 30% { opacity: 1; transform: translateY(-3px); } }
+.chat-quick { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px 14px 4px; background: var(--gray-50); }
+.chat-quick button { background: var(--white); border: 1px solid var(--gray-200); border-radius: 50px; padding: 7px 13px; font-size: 0.78rem; font-weight: 600; color: var(--text-mid); transition: all var(--transition); }
+.chat-quick button:hover { border-color: var(--amber); color: var(--amber); }
+.chat-input { display: flex; align-items: center; gap: 8px; padding: 12px 14px; background: var(--white); border-top: 1px solid var(--gray-100); }
+.chat-input input { flex: 1; padding: 11px 14px; border: 1.5px solid var(--gray-200); border-radius: 50px; font-family: 'Inter', sans-serif; font-size: 0.9rem; outline: none; transition: border-color var(--transition); }
+.chat-input input:focus { border-color: var(--amber); }
+.chat-input button { width: 42px; height: 42px; flex-shrink: 0; border-radius: 50%; background: linear-gradient(135deg, var(--amber), var(--amber-bright)); color: var(--navy-950); display: flex; align-items: center; justify-content: center; transition: transform var(--transition); }
+.chat-input button:hover { transform: scale(1.08); }
+.chat-input button svg { width: 18px; height: 18px; }
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 1024px) {
   .hero-inner { grid-template-columns: 1fr; gap: 48px; }
@@ -244,6 +367,7 @@ h1, h2, h3 { font-family: 'Plus Jakarta Sans', sans-serif; line-height: 1.12; }
   .services-grid { grid-template-columns: repeat(2, 1fr); }
   .approach-grid { grid-template-columns: 1fr; max-width: 520px; margin: 0 auto; }
   .contact-inner { grid-template-columns: 1fr; gap: 44px; }
+  .plans-grid { grid-template-columns: 1fr; max-width: 460px; margin: 0 auto; gap: 32px; }
 }
 
 @media (max-width: 768px) {
@@ -266,4 +390,7 @@ h1, h2, h3 { font-family: 'Plus Jakarta Sans', sans-serif; line-height: 1.12; }
   .hero-cta { flex-direction: column; }
   .btn-lg { width: 100%; }
   .contact-form { padding: 26px 20px; }
+  .checkout-modal { padding: 30px 22px; }
+  .chat-widget { bottom: 16px; right: 16px; }
+  .chat-panel { height: 460px; bottom: 74px; }
 }

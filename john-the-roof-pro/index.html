@@ -27,6 +27,7 @@
       <nav class="nav-links" id="navLinks">
         <a href="#about">About</a>
         <a href="#services">Services</a>
+        <a href="#enroll">Enroll</a>
         <a href="#approach">The C.A.R. Approach</a>
         <a href="#reviews">Reviews</a>
         <a href="#contact" class="btn btn-sm btn-primary nav-cta">Get in Touch</a>
@@ -160,11 +161,78 @@
             <div class="sc-body">
               <h3>Online Classes</h3>
               <p>Over <strong>15 hours of professional training</strong>, with exclusive content on discontinued shingles, documentation, and more.</p>
-              <a href="https://docs.google.com/forms/d/e/1FAIpQLSeGo_FM5QxdFKUjboTBTHdhwLHoObxvVUEuO-zEBzPW8Yh71w/viewform" target="_blank" rel="noopener" class="sc-link sc-link--strong">Sign Up My Team →</a>
+              <a href="#enroll" class="sc-link sc-link--strong">Enroll Online →</a>
             </div>
           </article>
 
         </div>
+      </div>
+    </section>
+
+    <!-- ===== ENROLL / PRICING ===== -->
+    <section class="section enroll" id="enroll">
+      <div class="enroll-bg" aria-hidden="true"></div>
+      <div class="container">
+        <div class="section-head section-head--light reveal">
+          <span class="eyebrow eyebrow-light">Enroll Today</span>
+          <h2>Book &amp; Pay in <span class="accent">Under a Minute</span></h2>
+          <p class="section-lead">Pick your training, check out securely, and get instant access. No phone tag, no waiting.</p>
+        </div>
+
+        <div class="plans-grid">
+
+          <article class="plan-card reveal">
+            <div class="plan-top">
+              <span class="plan-name">Single Course</span>
+              <div class="plan-price"><span class="pp-amt">$149</span><span class="pp-per">/ course</span></div>
+              <p class="plan-tag">One focused class, yours forever.</p>
+            </div>
+            <ul class="plan-feats">
+              <li>1 full online course</li>
+              <li>Lifetime access &amp; replays</li>
+              <li>Certificate of completion</li>
+              <li>Downloadable resources</li>
+            </ul>
+            <button class="btn btn-outline-dark btn-block enroll-btn"
+              data-plan="Single Course" data-price="149">Enroll Now</button>
+          </article>
+
+          <article class="plan-card plan-card--featured reveal">
+            <div class="plan-badge">Most Popular</div>
+            <div class="plan-top">
+              <span class="plan-name">Complete Library</span>
+              <div class="plan-price"><span class="pp-amt">$499</span><span class="pp-per">one-time</span></div>
+              <p class="plan-tag">All 15+ hours of pro training.</p>
+            </div>
+            <ul class="plan-feats">
+              <li><strong>Every</strong> online course &amp; module</li>
+              <li>15+ hours of training</li>
+              <li>Discontinued-shingle deep dives</li>
+              <li>Documentation &amp; report templates</li>
+              <li>Lifetime updates included</li>
+            </ul>
+            <button class="btn btn-primary btn-block enroll-btn"
+              data-plan="Complete Library" data-price="499">Enroll Now</button>
+          </article>
+
+          <article class="plan-card reveal">
+            <div class="plan-top">
+              <span class="plan-name">Team License</span>
+              <div class="plan-price"><span class="pp-amt">$1,999</span><span class="pp-per">up to 10 seats</span></div>
+              <p class="plan-tag">Train your whole crew at once.</p>
+            </div>
+            <ul class="plan-feats">
+              <li>Complete Library for up to 10 people</li>
+              <li>Team progress dashboard</li>
+              <li>Group onboarding session with John</li>
+              <li>Volume pricing beyond 10 seats</li>
+            </ul>
+            <button class="btn btn-outline-dark btn-block enroll-btn"
+              data-plan="Team License" data-price="1999">Enroll Now</button>
+          </article>
+
+        </div>
+        <p class="enroll-fine reveal">🔒 Secure checkout &amp; encrypted payment. Need an expert report or private class instead? <a href="#contact">Request a custom quote →</a></p>
       </div>
     </section>
 
@@ -296,6 +364,114 @@
     </section>
 
   </main>
+
+  <!-- ===== CHECKOUT MODAL ===== -->
+  <div class="checkout-overlay" id="checkoutOverlay" aria-hidden="true">
+    <div class="checkout-modal" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle">
+      <button class="checkout-close" id="checkoutClose" aria-label="Close checkout">&times;</button>
+
+      <!-- Progress -->
+      <div class="checkout-steps" id="checkoutSteps">
+        <span class="cs-step is-active" data-step="1">Plan</span>
+        <span class="cs-line"></span>
+        <span class="cs-step" data-step="2">Details</span>
+        <span class="cs-line"></span>
+        <span class="cs-step" data-step="3">Payment</span>
+      </div>
+
+      <!-- STEP 1 + 2: details -->
+      <div class="checkout-pane" id="pane-1">
+        <h3 id="checkoutTitle" class="checkout-h">Complete Your Enrollment</h3>
+        <div class="order-summary">
+          <div class="os-row">
+            <span class="os-label">Selected plan</span>
+            <span class="os-plan" id="osPlan">Complete Library</span>
+          </div>
+          <div class="os-row os-total">
+            <span>Total due today</span>
+            <span class="os-amt" id="osAmount">$499.00</span>
+          </div>
+        </div>
+        <div class="field"><label for="ckName">Full name</label>
+          <input id="ckName" type="text" placeholder="Your name" required /></div>
+        <div class="field"><label for="ckEmail">Email (for course access)</label>
+          <input id="ckEmail" type="email" placeholder="you@company.com" required /></div>
+        <div class="field"><label for="ckCompany">Company (optional)</label>
+          <input id="ckCompany" type="text" placeholder="Your company" /></div>
+        <button class="btn btn-primary btn-block btn-lg" id="toPayment">Continue to Payment →</button>
+      </div>
+
+      <!-- STEP 3: payment -->
+      <div class="checkout-pane" id="pane-2" hidden>
+        <h3 class="checkout-h">Payment Details</h3>
+        <div class="order-summary order-summary--slim">
+          <span class="os-plan" id="osPlan2">Complete Library</span>
+          <span class="os-amt" id="osAmount2">$499.00</span>
+        </div>
+        <div class="field"><label for="ckCard">Card number</label>
+          <div class="card-input">
+            <input id="ckCard" type="text" inputmode="numeric" placeholder="1234 1234 1234 1234" maxlength="19" />
+            <span class="card-brands">VISA &nbsp;•&nbsp; MC &nbsp;•&nbsp; AMEX</span>
+          </div></div>
+        <div class="field-row">
+          <div class="field"><label for="ckExp">Expiry</label>
+            <input id="ckExp" type="text" placeholder="MM / YY" maxlength="7" /></div>
+          <div class="field"><label for="ckCvc">CVC</label>
+            <input id="ckCvc" type="text" inputmode="numeric" placeholder="123" maxlength="4" /></div>
+        </div>
+        <button class="btn btn-primary btn-block btn-lg" id="payNow">Pay <span id="payAmt">$499.00</span></button>
+        <button class="checkout-back" id="backToDetails">← Back</button>
+        <p class="checkout-secure">🔒 Demo checkout — connect Stripe to accept live payments.</p>
+      </div>
+
+      <!-- SUCCESS -->
+      <div class="checkout-pane checkout-success" id="pane-3" hidden>
+        <div class="success-check">✓</div>
+        <h3 class="checkout-h">You're Enrolled!</h3>
+        <p class="success-sub">A receipt and your course access link are on the way to <strong id="successEmail">your inbox</strong>.</p>
+        <div class="success-plan" id="successPlan">Complete Library — $499.00</div>
+        <button class="btn btn-primary btn-block btn-lg" id="successDone">Start Learning</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== AI CHAT ASSISTANT ===== -->
+  <div class="chat-widget" id="chatWidget">
+    <button class="chat-launcher" id="chatLauncher" aria-label="Chat with Roof Pro AI">
+      <svg class="cl-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <svg class="cl-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      <span class="chat-ping"></span>
+    </button>
+
+    <div class="chat-panel" id="chatPanel" aria-hidden="true">
+      <div class="chat-header">
+        <div class="ch-avatar" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none"><path d="M16 4 L29 14 L26 14 L26 28 L6 28 L6 14 L3 14 Z" fill="currentColor"/></svg>
+        </div>
+        <div class="ch-meta">
+          <strong>Roof Pro AI</strong>
+          <span><span class="ch-dot"></span> Answers instantly, 24/7</span>
+        </div>
+      </div>
+      <div class="chat-body" id="chatBody">
+        <div class="chat-msg bot">
+          <p>👋 Hey, I'm John's AI assistant. Ask me anything about expert reports, classes, pricing, or how to get started.</p>
+        </div>
+      </div>
+      <div class="chat-quick" id="chatQuick">
+        <button data-q="What does an expert report cost?">Expert report cost?</button>
+        <button data-q="Tell me about the online classes">Online classes</button>
+        <button data-q="How do I enroll?">How to enroll</button>
+        <button data-q="What is the C.A.R. approach?">What's C.A.R.?</button>
+      </div>
+      <form class="chat-input" id="chatInput">
+        <input id="chatField" type="text" placeholder="Type your question…" autocomplete="off" />
+        <button type="submit" aria-label="Send">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+      </form>
+    </div>
+  </div>
 
   <!-- ===== FOOTER ===== -->
   <footer class="footer">
