@@ -96,14 +96,14 @@
   // Simple intent matching for the demo
   var answer = function (q) {
     var s = q.toLowerCase();
-    if (/(price|pricing|cost|how much|rate|\$|plan|subscription|monthly)/.test(s))
-      return "We keep it simple with monthly subscriptions: <strong>Starter $149/mo</strong>, our most popular <strong>Growth $349/mo</strong>, and <strong>Pro $649/mo</strong> — all $0 down, cancel anytime. Prefer to own your site outright? One-time builds are available too. Want me to help you pick the right plan?";
+    if (/(price|pricing|cost|how much|rate|\$|plan)/.test(s))
+      return "We offer three flexible options: <strong>One-Time Project ($1,500–$7,000)</strong>, our most popular <strong>Hybrid Plan ($800–$2,000 build + $100–250/mo)</strong>, and <strong>Website-as-a-Service ($0–500 setup + $150–400/mo)</strong>. Want me to help you pick the right fit?";
     if (/(ai|chatbot|bot|assistant|receptionist|agent)/.test(s))
-      return "Great question — I'm a demo of exactly that! 🤖 We build custom AI assistants that answer questions, book appointments, and capture leads 24/7. They're included with our <strong>Growth ($349/mo)</strong> and <strong>Pro ($649/mo)</strong> plans, or you can add one to any plan for <strong>$99–199/mo</strong>.";
+      return "Great question — I'm a demo of exactly that! 🤖 We build custom AI assistants that answer questions, book appointments, and capture leads 24/7. They start at <strong>$50–150/mo</strong> or come included with our service plans.";
     if (/(time|long|how fast|when|timeline|deadline)/.test(s))
       return "Most small-business sites launch in <strong>days, not months</strong>. After your free consultation we give you a clear timeline based on your project's scope.";
     if (/(seo|google|rank|search|traffic)/.test(s))
-      return "SEO is built into our <strong>Growth ($349/mo)</strong> and <strong>Pro ($649/mo)</strong> plans to help the right customers find you on Google. Want to go bigger? A <strong>Premium SEO Campaign</strong> add-on runs $200–500/mo.";
+      return "We offer <strong>SEO Optimization ($200–500/mo)</strong> to help the right customers find you on Google. It pairs perfectly with a new site build.";
     if (/(contact|call|book|consult|talk|email|phone|appointment)/.test(s))
       return "Let's talk! 📅 Book a <strong>free consultation</strong> by filling out the form on this page, emailing <a href='mailto:mylothetechguy@gmail.com'>mylothetechguy@gmail.com</a>, or calling Myles Wells at (270) 570-0790 or Trey Williams at (270) 231-1173.";
     if (/(hi|hello|hey|yo|sup|howdy)/.test(s))
