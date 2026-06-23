@@ -266,7 +266,3 @@ img { max-width: 100%; display: block; }
 .faq-a { padding: 0 1.5rem 1.35rem; }
 .faq-a p { color: var(--muted); font-size: 1rem; line-height: 1.65; }
 .faq-a strong { color: var(--text); font-weight: 600; }
-
-/* ===== Stripe Buy Button ===== */
-.buy-wrap { margin-top: auto; padding-top: .4rem; display: flex; justify-content: center; min-height: 48px; }
-.buy-wrap stripe-buy-button { width: 100%; }
