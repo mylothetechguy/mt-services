@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080">
+  <defs>
+    <linearGradient id="grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3b82f6"/><stop offset="0.55" stop-color="#22b0d8"/><stop offset="1" stop-color="#06d6c4"/>
+    </linearGradient>
+    <radialGradient id="bg" cx="50%" cy="38%" r="78%">
+      <stop offset="0" stop-color="#16244e"/><stop offset="55%" stop-color="#0b1124"/><stop offset="100%" stop-color="#070b16"/>
+    </radialGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#3b82f6" stop-opacity="0.45"/><stop offset="100%" stop-color="#3b82f6" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1080" height="1080" fill="url(#bg)"/>
+  <circle cx="540" cy="500" r="400" fill="url(#glow)"/>
+  <circle cx="540" cy="540" r="497" fill="none" stroke="url(#grad)" stroke-width="14" opacity="0.92"/>
+  <circle cx="540" cy="540" r="470" fill="none" stroke="#27376a" stroke-width="2" opacity="0.65"/>
+  <text x="540" y="650" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="432" letter-spacing="-14" fill="url(#grad)">M&amp;T</text>
+  <text x="540" y="800" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="52" letter-spacing="22" fill="#9fb0d4">SERVICES</text>
+</svg>

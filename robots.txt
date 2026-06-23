@@ -1,0 +1,6 @@
+# M&T Services — https://mtservicesusa.com
+User-agent: *
+Allow: /
+Disallow: /success.html
+
+Sitemap: https://mtservicesusa.com/sitemap.xml
