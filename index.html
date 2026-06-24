@@ -499,6 +499,25 @@
     </form>
   </div>
 
+  <!-- ===== ElevenLabs Voice Receptionist ===== -->
+  <!-- TO ACTIVATE: paste your ElevenLabs agent id between the quotes below, then redeploy.
+       Find it in ElevenLabs -> Conversational AI -> your Agent. Until a real id is set,
+       the voice widget stays hidden so nothing broken shows on the live site. -->
+  <script>
+    (function () {
+      var AGENT_ID = "REPLACE_WITH_YOUR_ELEVENLABS_AGENT_ID";
+      if (!AGENT_ID || AGENT_ID.indexOf("REPLACE") === 0) return; // not configured yet
+      var widget = document.createElement("elevenlabs-convai");
+      widget.setAttribute("agent-id", AGENT_ID);
+      document.body.appendChild(widget);
+      var s = document.createElement("script");
+      s.src = "https://unpkg.com/@elevenlabs/convai-widget-embed";
+      s.async = true;
+      s.type = "text/javascript";
+      document.body.appendChild(s);
+    })();
+  </script>
+
   <script src="script.js"></script>
 </body>
 </html>
