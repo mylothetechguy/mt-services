@@ -2,3 +2,7 @@
 
 # Local Netlify folder
 .netlify
+
+# local utility scripts (may contain tokens)
+dns_repoint.py
+*.token
