@@ -46,7 +46,7 @@ html,body{background:#05080f;color:var(--text);font-family:var(--font);-webkit-f
 .brand{display:flex;align-items:center;gap:.7rem}
 .brand .logo{width:46px;height:46px;flex:0 0 46px}
 .brand .bname{font-family:var(--display);font-weight:800;font-size:1.18rem;letter-spacing:-.02em;line-height:1}
-.brand .bname .amp{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.brand .bname .amp{color:#06d6c4}
 .brand .btag{color:var(--faint);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;margin-top:.28rem}
 .doc-meta{text-align:right;font-size:.78rem;color:var(--muted)}
 .doc-meta .site{color:var(--accent-2);font-weight:600}
@@ -54,7 +54,7 @@ html,body{background:#05080f;color:var(--text);font-family:var(--font);-webkit-f
 .eyebrow{display:inline-block;text-transform:uppercase;letter-spacing:.2em;font-size:.72rem;font-weight:700;color:var(--accent-2);margin-bottom:.5rem}
 .doc-title{font-family:var(--display);font-weight:800;letter-spacing:-.03em;line-height:1.0;
   font-size:clamp(2.4rem,7vw,3.4rem);text-transform:uppercase}
-.doc-title .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.doc-title .g{color:#3b82f6}
 .lead{color:var(--muted);font-size:1rem;max-width:62ch;margin-top:.9rem}
 
 /* ---- Generic content ---- */
@@ -80,7 +80,7 @@ li::marker{color:var(--accent)}
   border:1px solid var(--border);border-radius:14px;padding:1rem 1.1rem}
 .card .k{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);font-weight:700}
 .card .v{font-family:var(--display);font-weight:700;font-size:1rem;margin-top:.3rem}
-.stat .v{font-size:1.7rem;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat .v{font-size:1.7rem;color:#3b82f6}
 .stat .d{font-size:.74rem;color:var(--accent-2);font-weight:600;margin-top:.2rem}
 
 .step{display:flex;gap:.9rem;align-items:flex-start;margin:.8rem 0}
@@ -96,7 +96,7 @@ thead th{font-family:var(--display);font-size:.74rem;letter-spacing:.1em;text-tr
 tbody tr:nth-child(even){background:rgba(255,255,255,.025)}
 td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
 .tot td{border-top:1px solid var(--border-strong);border-bottom:none;font-weight:700;color:#fff;padding-top:.8rem}
-.tot td .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.tot td .g{color:#06d6c4}
 
 /* ---- Sign / pay blocks ---- */
 .box{border:1px dashed var(--border-strong);border-radius:14px;padding:1rem 1.1rem;margin-top:1rem}
@@ -136,17 +136,8 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
     -webkit-print-color-adjust:exact;print-color-adjust:exact;
   }
   .sheet,.card,.box{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  /* Gradient text — background-clip:text goes invisible in PDF without this */
-  .amp,.g,.stat .v,.price-highlight,.eyebrow,.step .n,.pill,.tag{
-    -webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;
-  }
-  /* Fallback: if background-clip:text still fails, use solid accent color */
-  .amp{background:none!important;-webkit-background-clip:unset!important;background-clip:unset!important;color:#22b0d8!important}
-  .doc-title .g,.tot td .g{background:none!important;-webkit-background-clip:unset!important;background-clip:unset!important;color:#3b82f6!important}
-  .stat .v{background:none!important;-webkit-background-clip:unset!important;background-clip:unset!important;color:#3b82f6!important}
-  .price-highlight{background:none!important;-webkit-background-clip:unset!important;background-clip:unset!important;color:#22b0d8!important}
-  .step .n{background:linear-gradient(120deg,#3b82f6 0%,#22b0d8 55%,#06d6c4 100%)!important;color:#04111f!important}
-  .pill{background:linear-gradient(120deg,#3b82f6 0%,#22b0d8 55%,#06d6c4 100%)!important;color:#04111f!important}
+  /* Force gradient backgrounds (non-text) to print */
+  .step .n,.pill,.tag,.h2.sec::before{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
   .pad{padding:.36in .46in .38in}
   .doc-head{margin-bottom:.6rem;padding-bottom:.55rem}
   .doc-title{font-size:1.9rem!important}
