@@ -86,6 +86,7 @@ img { max-width: 100%; display: block; }
 .nav-links a { color: var(--muted); font-weight: 500; font-size: .96rem; transition: color .2s; }
 .nav-links a:hover { color: var(--text); }
 .nav-cta { color: #04111f !important; }
+.nav-portal { color: var(--text) !important; }
 .nav-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: 0; cursor: pointer; padding: 6px; }
 .nav-toggle span { width: 24px; height: 2px; background: var(--text); border-radius: 2px; transition: .3s; }
 .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
