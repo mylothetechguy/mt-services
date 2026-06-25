@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M&amp;T Agent Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#070b16;
+  --bg2:#0e1525;
+  --bg3:#151d30;
+  --bg4:#1c2540;
+  --border:#1e2d4a;
+  --border2:#253354;
+  --text:#e8edf7;
+  --muted:#6b7fa3;
+  --accent:#3b82f6;
+  --teal:#06d6c4;
+  --grad:linear-gradient(135deg,#3b82f6 0%,#22b0d8 55%,#06d6c4 100%);
+  --red:#ef4444;
+  --green:#22c55e;
+  --yellow:#eab308;
+  --orange:#f97316;
+  --purple:#a855f7;
+  --sidebar:240px;
+  --radius:10px;
+}
+html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-size:14px}
+
+/* LOCK SCREEN */
+#lock{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:var(--bg)}
+#lock .lock-card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:2.5rem 2rem;width:340px;text-align:center}
+#lock .lock-logo{width:64px;height:64px;margin:0 auto 1rem}
+#lock h2{font-family:'Sora',sans-serif;font-size:1.4rem;font-weight:800;color:var(--text);margin-bottom:.3rem}
+#lock p{color:var(--muted);font-size:.85rem;margin-bottom:1.5rem}
+#lock input{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:.65rem .9rem;color:var(--text);font-size:.95rem;outline:none;margin-bottom:.75rem}
+#lock input:focus{border-color:var(--accent)}
+#lock button{width:100%;background:var(--grad);border:none;border-radius:8px;padding:.7rem;color:#fff;font-family:'Sora',sans-serif;font-weight:700;font-size:.95rem;cursor:pointer}
+#lock .err{color:var(--red);font-size:.8rem;margin-top:.5rem;min-height:1rem}
+.hidden{display:none!important}
+
+/* APP SHELL */
+#app{display:flex;height:100vh;overflow:hidden}
+
+/* SIDEBAR */
+.sidebar{width:var(--sidebar);background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto}
+.sidebar-brand{padding:1.2rem 1rem 1rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.65rem}
+.sidebar-brand svg{width:36px;height:36px;flex-shrink:0}
+.sidebar-brand .sname{font-family:'Sora',sans-serif;font-weight:800;font-size:.95rem;line-height:1.15}
+.sidebar-brand .stag{font-size:.68rem;color:var(--teal);letter-spacing:.04em}
+nav{flex:1;padding:.8rem 0}
+nav a{display:flex;align-items:center;gap:.7rem;padding:.6rem 1rem;color:var(--muted);text-decoration:none;font-size:.82rem;font-weight:500;border-radius:7px;margin:0 .5rem .15rem;cursor:pointer;transition:all .15s}
+nav a:hover{background:var(--bg3);color:var(--text)}
+nav a.active{background:rgba(59,130,246,.12);color:var(--accent)}
+nav a .dot{width:7px;height:7px;border-radius:50%;background:var(--border2);flex-shrink:0;transition:background .2s}
+nav a.on .dot{background:var(--green);box-shadow:0 0 6px var(--green)}
+nav a .nav-icon{width:16px;text-align:center;font-size:.9rem}
+.sidebar-footer{padding:.9rem 1rem;border-top:1px solid var(--border)}
+.sidebar-footer a{font-size:.75rem;color:var(--muted);text-decoration:none;display:block;margin-bottom:.3rem}
+.sidebar-footer a:hover{color:var(--text)}
+
+/* MAIN CONTENT */
+.main{flex:1;overflow-y:auto;display:flex;flex-direction:column}
+.topbar{background:var(--bg2);border-bottom:1px solid var(--border);padding:.7rem 1.4rem;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.topbar h1{font-family:'Sora',sans-serif;font-weight:800;font-size:1.1rem}
+.topbar .sub{font-size:.75rem;color:var(--muted);margin-top:.1rem}
+.topbar-right{display:flex;align-items:center;gap:.8rem}
+.badge{font-size:.7rem;padding:.2rem .55rem;border-radius:20px;font-weight:600;background:rgba(34,197,94,.12);color:var(--green);border:1px solid rgba(34,197,94,.2)}
+.btn{display:inline-flex;align-items:center;gap:.4rem;padding:.45rem .85rem;border-radius:7px;font-size:.78rem;font-weight:600;cursor:pointer;border:none;transition:all .15s}
+.btn-primary{background:var(--grad);color:#fff}
+.btn-ghost{background:var(--bg3);color:var(--text);border:1px solid var(--border2)}
+.btn:hover{opacity:.88}
+
+.panel{padding:1.2rem 1.4rem;flex:1}
+
+/* METRIC CARDS */
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:.9rem;margin-bottom:1.2rem}
+.metric-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:.9rem 1.1rem}
+.metric-card .mk{font-size:.72rem;color:var(--muted);font-weight:500;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.4rem}
+.metric-card .mv{font-size:1.8rem;font-family:'Sora',sans-serif;font-weight:800;line-height:1}
+.metric-card .md{font-size:.72rem;color:var(--muted);margin-top:.35rem}
+.metric-card .md.up{color:var(--green)}
+.metric-card .md.down{color:var(--red)}
+
+/* SECTION HEADING */
+.sec-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:.7rem}
+.sec-row h2{font-family:'Sora',sans-serif;font-size:.9rem;font-weight:700}
+
+/* AGENT STATUS CARDS */
+.agent-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem;margin-bottom:1.2rem}
+.agent-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.1rem}
+.agent-card-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:.6rem}
+.agent-icon{font-size:1.4rem;margin-bottom:.2rem}
+.agent-name{font-family:'Sora',sans-serif;font-weight:700;font-size:.88rem}
+.agent-desc{font-size:.73rem;color:var(--muted);margin-top:.15rem;line-height:1.4}
+.toggle{position:relative;width:40px;height:22px;flex-shrink:0}
+.toggle input{opacity:0;width:0;height:0}
+.toggle-track{position:absolute;inset:0;background:var(--bg4);border-radius:11px;cursor:pointer;border:1px solid var(--border2);transition:background .2s}
+.toggle input:checked~.toggle-track{background:var(--green);border-color:var(--green)}
+.toggle-thumb{position:absolute;top:3px;left:3px;width:14px;height:14px;background:#fff;border-radius:50%;transition:transform .2s;pointer-events:none}
+.toggle input:checked~.toggle-thumb{transform:translateX(18px)}
+.agent-stat{font-size:.75rem;color:var(--muted);margin-top:.5rem;padding-top:.5rem;border-top:1px solid var(--border)}
+.pulse{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--muted);margin-right:.4rem;vertical-align:middle}
+.pulse.live{background:var(--green);box-shadow:0 0 0 0 rgba(34,197,94,.4);animation:pulse 1.8s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(34,197,94,.4)}70%{box-shadow:0 0 0 8px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
+
+/* ACTIVITY FEED */
+.cols{display:grid;grid-template-columns:1fr 320px;gap:.9rem}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius)}
+.card-head{padding:.8rem 1rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.card-head h3{font-family:'Sora',sans-serif;font-size:.82rem;font-weight:700}
+.feed{height:260px;overflow-y:auto;padding:.6rem}
+.feed-item{display:flex;gap:.6rem;padding:.4rem .3rem;border-bottom:1px solid rgba(30,45,74,.5)}
+.feed-item:last-child{border-bottom:none}
+.feed-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:.2rem}
+.feed-msg{font-size:.77rem;color:var(--text);line-height:1.4}
+.feed-time{font-size:.68rem;color:var(--muted);margin-top:.15rem}
+
+/* TABLES */
+table{width:100%;border-collapse:collapse;font-size:.78rem}
+thead th{padding:.6rem .8rem;text-align:left;color:var(--muted);font-weight:600;font-size:.7rem;text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--border)}
+tbody td{padding:.6rem .8rem;border-bottom:1px solid rgba(30,45,74,.5);color:var(--text);vertical-align:middle}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover td{background:rgba(21,29,48,.5)}
+.num{text-align:right}
+tfoot td{padding:.6rem .8rem;font-weight:600;color:var(--teal);border-top:1px solid var(--border)}
+
+/* STATUS PILLS */
+.pill-status{display:inline-flex;align-items:center;gap:.3rem;font-size:.68rem;font-weight:600;padding:.18rem .5rem;border-radius:20px}
+.pill-new{background:rgba(59,130,246,.12);color:var(--accent);border:1px solid rgba(59,130,246,.25)}
+.pill-contacted{background:rgba(168,85,247,.12);color:var(--purple);border:1px solid rgba(168,85,247,.25)}
+.pill-qualified{background:rgba(234,179,8,.12);color:var(--yellow);border:1px solid rgba(234,179,8,.25)}
+.pill-booked{background:rgba(34,197,94,.12);color:var(--green);border:1px solid rgba(34,197,94,.25)}
+.pill-missed{background:rgba(239,68,68,.12);color:var(--red);border:1px solid rgba(239,68,68,.25)}
+
+/* KANBAN */
+.kanban{display:grid;grid-template-columns:repeat(4,1fr);gap:.8rem;margin-bottom:1.2rem}
+.kanban-col{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.kanban-head{padding:.65rem .9rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.kanban-head .col-name{font-size:.78rem;font-weight:700;display:flex;align-items:center;gap:.4rem}
+.kanban-head .col-count{font-size:.7rem;color:var(--muted);background:var(--bg3);padding:.1rem .4rem;border-radius:10px}
+.kanban-body{padding:.6rem;min-height:120px;display:flex;flex-direction:column;gap:.5rem}
+.kcard{background:var(--bg3);border:1px solid var(--border2);border-radius:7px;padding:.55rem .7rem;cursor:pointer}
+.kcard:hover{border-color:var(--accent)}
+.kcard .kname{font-size:.78rem;font-weight:600}
+.kcard .kbiz{font-size:.7rem;color:var(--muted);margin-top:.15rem}
+.kcard .ktime{font-size:.65rem;color:var(--muted);margin-top:.3rem}
+
+/* FORMS / CONFIGS */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+.form-group{display:flex;flex-direction:column;gap:.3rem}
+.form-group label{font-size:.72rem;color:var(--muted);font-weight:500}
+.form-group input,.form-group select,.form-group textarea{background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:.55rem .75rem;color:var(--text);font-size:.82rem;font-family:'Inter',sans-serif;outline:none;transition:border .15s;resize:vertical}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--accent)}
+.form-group textarea{min-height:80px}
+.full{grid-column:1/-1}
+
+/* CAMPAIGN CARDS */
+.campaign-grid{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin-bottom:1.1rem}
+.camp-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.camp-head{padding:.75rem 1rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.camp-head h3{font-family:'Sora',sans-serif;font-size:.84rem;font-weight:700;display:flex;align-items:center;gap:.5rem}
+.camp-logo{font-size:1rem}
+.camp-stats{display:grid;grid-template-columns:repeat(4,1fr);padding:.8rem 1rem;gap:.5rem;border-bottom:1px solid var(--border)}
+.cs-item .cs-k{font-size:.67rem;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.cs-item .cs-v{font-size:1.1rem;font-family:'Sora',sans-serif;font-weight:700;margin-top:.15rem}
+.camp-body{padding:.9rem 1rem}
+
+/* APPOINTMENTS */
+.appt-list{display:flex;flex-direction:column;gap:.6rem}
+.appt-item{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:.7rem .9rem;display:flex;align-items:center;gap.8rem;justify-content:space-between}
+.appt-left{display:flex;align-items:center;gap:.8rem}
+.appt-time{text-align:center;min-width:52px}
+.appt-time .at-day{font-size:.68rem;color:var(--muted);text-transform:uppercase}
+.appt-time .at-hr{font-size:1rem;font-family:'Sora',sans-serif;font-weight:700}
+.appt-info .an{font-size:.82rem;font-weight:600}
+.appt-info .ab{font-size:.72rem;color:var(--muted);margin-top:.1rem}
+.appt-right{display:flex;align-items:center;gap:.6rem}
+
+/* STATS ROW */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:.8rem;margin-bottom:1rem}
+.sr-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:.8rem 1rem}
+.sr-card .srk{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:.25rem}
+.sr-card .srv{font-size:1.4rem;font-family:'Sora',sans-serif;font-weight:800}
+
+/* SETTINGS */
+.int-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem;margin-bottom:1.1rem}
+.int-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1rem}
+.int-card .ik{font-family:'Sora',sans-serif;font-size:.85rem;font-weight:700;margin-bottom:.3rem;display:flex;align-items:center;gap:.5rem}
+.int-card p{font-size:.75rem;color:var(--muted);line-height:1.4;margin-bottom:.7rem}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+
+/* MODAL */
+.modal-bg{position:fixed;inset:0;background:rgba(7,11,22,.8);z-index:999;display:flex;align-items:center;justify-content:center}
+.modal{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:1.5rem;width:460px;max-width:95vw}
+.modal h3{font-family:'Sora',sans-serif;font-size:1rem;font-weight:800;margin-bottom:1rem}
+.modal-foot{display:flex;justify-content:flex-end;gap:.6rem;margin-top:1.2rem}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .metrics{grid-template-columns:repeat(2,1fr)}
+  .agent-grid{grid-template-columns:1fr 1fr}
+  .cols{grid-template-columns:1fr}
+  .kanban{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<!-- LOCK SCREEN -->
+<div id="lock">
+  <div class="lock-card">
+    <svg class="lock-logo" viewBox="0 0 1080 1080" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="540" cy="540" r="497" fill="none" stroke="#3b82f6" stroke-width="34"/>
+      <text x="540" y="620" text-anchor="middle" font-family="Sora,Arial" font-weight="800" font-size="360" letter-spacing="-12" fill="#06d6c4">M&amp;T</text>
+    </svg>
+    <h2>Agent Dashboard</h2>
+    <p>M&amp;T Services · Staff access only</p>
+    <input type="password" id="pw" placeholder="Enter password" onkeydown="if(event.key==='Enter')unlock()">
+    <button onclick="unlock()">Unlock Dashboard</button>
+    <div class="err" id="pw-err"></div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app" class="hidden">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <svg viewBox="0 0 1080 1080" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="540" cy="540" r="497" fill="none" stroke="#3b82f6" stroke-width="34"/>
+        <text x="540" y="620" text-anchor="middle" font-family="Sora,Arial" font-weight="800" font-size="360" letter-spacing="-12" fill="#06d6c4">M&amp;T</text>
+      </svg>
+      <div>
+        <div class="sname">M&amp;T Services</div>
+        <div class="stag">Agent Dashboard</div>
+      </div>
+    </div>
+    <nav>
+      <a onclick="showPanel('overview')" class="active" id="nav-overview">
+        <span class="nav-icon">⚡</span> Overview
+      </a>
+      <a onclick="showPanel('ads')" id="nav-ads">
+        <span class="nav-icon">📣</span> Ad Manager
+        <span class="dot" id="dot-ads"></span>
+      </a>
+      <a onclick="showPanel('leads')" id="nav-leads">
+        <span class="nav-icon">🎯</span> Lead Engine
+        <span class="dot" id="dot-leads"></span>
+      </a>
+      <a onclick="showPanel('booker')" id="nav-booker">
+        <span class="nav-icon">📅</span> Auto-Booker
+        <span class="dot" id="dot-booker"></span>
+      </a>
+      <a onclick="showPanel('settings')" id="nav-settings">
+        <span class="nav-icon">⚙️</span> Settings
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../onboarding/index.html">← Client Portal</a>
+      <a href="mailto:mylesjwells@mtservicesusa.com">mylesjwells@mtservicesusa.com</a>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <div>
+        <h1 id="panel-title">Overview</h1>
+        <div class="sub" id="panel-sub">All systems · <span id="live-time"></span></div>
+      </div>
+      <div class="topbar-right">
+        <span class="badge" id="system-status">● All Agents Live</span>
+        <button class="btn btn-ghost" onclick="exportCSV()">⬇ Export CSV</button>
+        <button class="btn btn-primary" onclick="openAddLead()">+ Add Lead</button>
+      </div>
+    </div>
+
+    <!-- OVERVIEW PANEL -->
+    <div class="panel" id="panel-overview">
+      <div class="metrics">
+        <div class="metric-card">
+          <div class="mk">Total Leads</div>
+          <div class="mv" id="m-leads">0</div>
+          <div class="md up" id="m-leads-d">↑ 0 this week</div>
+        </div>
+        <div class="metric-card">
+          <div class="mk">Appointments Booked</div>
+          <div class="mv" id="m-appts">0</div>
+          <div class="md up" id="m-appts-d">↑ 0 this week</div>
+        </div>
+        <div class="metric-card">
+          <div class="mk">Est. Ad Spend</div>
+          <div class="mv" id="m-spend">$0</div>
+          <div class="md" id="m-spend-d">this month</div>
+        </div>
+        <div class="metric-card">
+          <div class="mk">Cost Per Lead</div>
+          <div class="mv" id="m-cpl">—</div>
+          <div class="md" id="m-cpl-d">avg all channels</div>
+        </div>
+      </div>
+
+      <div class="sec-row" style="margin-bottom:.7rem"><h2>Agent Status</h2></div>
+      <div class="agent-grid">
+        <div class="agent-card">
+          <div class="agent-card-head">
+            <div>
+              <div class="agent-icon">📣</div>
+              <div class="agent-name">Ad Manager</div>
+              <div class="agent-desc">Runs Google &amp; Meta campaigns, optimizes budget, pauses underperformers</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" id="toggle-ads" onchange="toggleAgent('ads',this.checked)">
+              <div class="toggle-track"></div>
+              <div class="toggle-thumb"></div>
+            </label>
+          </div>
+          <div class="agent-stat"><span class="pulse" id="pulse-ads"></span><span id="stat-ads">Offline</span></div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-card-head">
+            <div>
+              <div class="agent-icon">🎯</div>
+              <div class="agent-name">Lead Engine</div>
+              <div class="agent-desc">Captures leads, sends instant follow-up via email &amp; SMS, advances pipeline</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" id="toggle-leads" onchange="toggleAgent('leads',this.checked)">
+              <div class="toggle-track"></div>
+              <div class="toggle-thumb"></div>
+            </label>
+          </div>
+          <div class="agent-stat"><span class="pulse" id="pulse-leads"></span><span id="stat-leads">Offline</span></div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-card-head">
+            <div>
+              <div class="agent-icon">📅</div>
+              <div class="agent-name">Auto-Booker</div>
+              <div class="agent-desc">Sends calendar links, books appointments, fires reminders 24 hrs before</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" id="toggle-booker" onchange="toggleAgent('booker',this.checked)">
+              <div class="toggle-track"></div>
+              <div class="toggle-thumb"></div>
+            </label>
+          </div>
+          <div class="agent-stat"><span class="pulse" id="pulse-booker"></span><span id="stat-booker">Offline</span></div>
+        </div>
+      </div>
+
+      <div class="cols">
+        <div class="card">
+          <div class="card-head"><h3>Recent Leads</h3><button class="btn btn-ghost" style="font-size:.7rem;padding:.3rem .6rem" onclick="showPanel('leads')">View all →</button></div>
+          <div style="overflow-x:auto">
+            <table id="overview-lead-table">
+              <thead><tr><th>Name</th><th>Business</th><th>Source</th><th>Status</th><th>Added</th></tr></thead>
+              <tbody id="overview-lead-body"><tr><td colspan="5" style="text-align:center;color:var(--muted);padding:1.5rem">No leads yet — add your first lead above</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h3>Activity Feed</h3></div>
+          <div class="feed" id="activity-feed">
+            <div class="feed-item">
+              <div class="feed-dot" style="background:var(--accent)"></div>
+              <div><div class="feed-msg">Dashboard initialized — agents ready to deploy</div><div class="feed-time">Just now</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ADS PANEL -->
+    <div class="panel hidden" id="panel-ads">
+      <div class="campaign-grid">
+        <div class="camp-card">
+          <div class="camp-head">
+            <h3><span class="camp-logo">🔵</span> Google Ads</h3>
+            <span class="pill-status pill-new" id="google-status">Inactive</span>
+          </div>
+          <div class="camp-stats">
+            <div class="cs-item"><div class="cs-k">Impressions</div><div class="cs-v" id="g-impr">—</div></div>
+            <div class="cs-item"><div class="cs-k">Clicks</div><div class="cs-v" id="g-clicks">—</div></div>
+            <div class="cs-item"><div class="cs-k">Leads</div><div class="cs-v" id="g-leads">—</div></div>
+            <div class="cs-item"><div class="cs-k">Spend</div><div class="cs-v" id="g-spend">—</div></div>
+          </div>
+          <div class="camp-body">
+            <div class="form-grid" style="grid-template-columns:1fr 1fr">
+              <div class="form-group">
+                <label>Daily Budget ($)</label>
+                <input type="number" id="g-budget" placeholder="e.g. 25" oninput="saveCfg()">
+              </div>
+              <div class="form-group">
+                <label>Target Location</label>
+                <input type="text" id="g-geo" placeholder="e.g. Shreveport, LA" oninput="saveCfg()">
+              </div>
+              <div class="form-group full">
+                <label>Google Ads Customer ID</label>
+                <input type="text" id="g-cid" placeholder="xxx-xxx-xxxx" oninput="saveCfg()">
+              </div>
+              <div class="form-group full">
+                <label>Lead Webhook URL (Google)</label>
+                <input type="url" id="g-webhook" placeholder="https://hook.make.com/..." oninput="saveCfg()">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="camp-card">
+          <div class="camp-head">
+            <h3><span class="camp-logo">🔷</span> Meta Ads</h3>
+            <span class="pill-status pill-new" id="meta-status">Inactive</span>
+          </div>
+          <div class="camp-stats">
+            <div class="cs-item"><div class="cs-k">Reach</div><div class="cs-v" id="m-reach">—</div></div>
+            <div class="cs-item"><div class="cs-k">Clicks</div><div class="cs-v" id="m-clicks">—</div></div>
+            <div class="cs-item"><div class="cs-k">Leads</div><div class="cs-v" id="m-lead-cnt">—</div></div>
+            <div class="cs-item"><div class="cs-k">Spend</div><div class="cs-v" id="m-ad-spend">—</div></div>
+          </div>
+          <div class="camp-body">
+            <div class="form-grid" style="grid-template-columns:1fr 1fr">
+              <div class="form-group">
+                <label>Daily Budget ($)</label>
+                <input type="number" id="m-budget" placeholder="e.g. 20" oninput="saveCfg()">
+              </div>
+              <div class="form-group">
+                <label>Audience / Interest</label>
+                <input type="text" id="m-audience" placeholder="e.g. homeowners 30-55" oninput="saveCfg()">
+              </div>
+              <div class="form-group full">
+                <label>Meta Ad Account ID</label>
+                <input type="text" id="m-acct" placeholder="act_XXXXXXXXXX" oninput="saveCfg()">
+              </div>
+              <div class="form-group full">
+                <label>Lead Webhook URL (Meta)</label>
+                <input type="url" id="m-webhook" placeholder="https://hook.make.com/..." oninput="saveCfg()">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h3>Ad Performance Log</h3><span style="font-size:.72rem;color:var(--muted)">Updated when agents fire</span></div>
+        <div style="overflow-x:auto">
+          <table id="ads-log-table">
+            <thead><tr><th>Date</th><th>Channel</th><th>Campaign</th><th class="num">Impressions</th><th class="num">Clicks</th><th class="num">Leads</th><th class="num">Spend</th><th class="num">CPL</th></tr></thead>
+            <tbody id="ads-log-body"><tr><td colspan="8" style="text-align:center;color:var(--muted);padding:1.5rem">No ad data yet — configure campaigns above and activate Ad Manager</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- LEADS PANEL -->
+    <div class="panel hidden" id="panel-leads">
+      <div class="kanban" id="kanban-board">
+        <!-- populated by JS -->
+      </div>
+
+      <div class="sec-row"><h2>All Leads</h2>
+        <div style="display:flex;gap:.5rem">
+          <input type="text" id="lead-search" placeholder="Search leads…" style="background:var(--bg2);border:1px solid var(--border);border-radius:7px;padding:.4rem .7rem;color:var(--text);font-size:.78rem;outline:none;width:180px" oninput="renderLeadTable()">
+          <button class="btn btn-primary" onclick="openAddLead()">+ Add Lead</button>
+        </div>
+      </div>
+      <div class="card" style="margin-bottom:1.1rem">
+        <div style="overflow-x:auto">
+          <table>
+            <thead><tr><th>Name</th><th>Phone</th><th>Email</th><th>Business</th><th>Source</th><th>Status</th><th>Added</th><th></th></tr></thead>
+            <tbody id="lead-table-body"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h3>Auto-Response Config</h3></div>
+        <div style="padding:1rem">
+          <div class="form-grid">
+            <div class="form-group full">
+              <label>Email Follow-up Template (sent within 60s of new lead)</label>
+              <textarea id="email-template" oninput="saveCfg()" placeholder="Hi {name}, thanks for reaching out to M&T Services! We'll be in touch within the hour. — Myles"></textarea>
+            </div>
+            <div class="form-group full">
+              <label>SMS Follow-up Template</label>
+              <textarea id="sms-template" oninput="saveCfg()" placeholder="Hey {name}! Got your inquiry. We'll call you shortly. Reply STOP to opt out. - M&T Services" style="min-height:60px"></textarea>
+            </div>
+            <div class="form-group">
+              <label>Lead Intake Webhook (receives POSTed lead data)</label>
+              <input type="url" id="lead-webhook" placeholder="https://hook.make.com/..." oninput="saveCfg()">
+            </div>
+            <div class="form-group">
+              <label>CRM Push Webhook</label>
+              <input type="url" id="crm-webhook" placeholder="https://hook.make.com/..." oninput="saveCfg()">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOOKER PANEL -->
+    <div class="panel hidden" id="panel-booker">
+      <div class="stats-row">
+        <div class="sr-card"><div class="srk">This Week</div><div class="srv" id="b-week">0</div></div>
+        <div class="sr-card"><div class="srk">This Month</div><div class="srv" id="b-month">0</div></div>
+        <div class="sr-card"><div class="srk">Show Rate</div><div class="srv" id="b-show">—</div></div>
+        <div class="sr-card"><div class="srk">Reminders Sent</div><div class="srv" id="b-remind">0</div></div>
+      </div>
+
+      <div class="cols" style="margin-bottom:1.1rem">
+        <div class="card">
+          <div class="card-head"><h3>Upcoming Appointments</h3><button class="btn btn-primary" style="font-size:.72rem;padding:.35rem .7rem" onclick="openAddAppt()">+ Add Appointment</button></div>
+          <div style="padding:.8rem" id="appt-list-wrap">
+            <div id="appt-list" class="appt-list"></div>
+            <div id="no-appts" style="text-align:center;color:var(--muted);padding:1.5rem;font-size:.8rem">No upcoming appointments — add one above</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h3>Booking Config</h3></div>
+          <div style="padding:1rem">
+            <div class="form-grid" style="grid-template-columns:1fr">
+              <div class="form-group">
+                <label>Calendly / Booking Link</label>
+                <input type="url" id="cal-link" placeholder="https://calendly.com/yourlink" oninput="saveCfg()">
+              </div>
+              <div class="form-group">
+                <label>Confirmation SMS Template</label>
+                <textarea id="conf-sms" oninput="saveCfg()" placeholder="Confirmed! Your appt with M&T Services is {date} at {time}. Reply C to cancel." style="min-height:65px"></textarea>
+              </div>
+              <div class="form-group">
+                <label>24-Hr Reminder Template</label>
+                <textarea id="remind-sms" oninput="saveCfg()" placeholder="Reminder: Your appt is tomorrow at {time}. See you then! — M&T Services" style="min-height:65px"></textarea>
+              </div>
+              <div class="form-group">
+                <label>Booking Webhook (fires on new booking)</label>
+                <input type="url" id="booking-webhook" placeholder="https://hook.make.com/..." oninput="saveCfg()">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SETTINGS PANEL -->
+    <div class="panel hidden" id="panel-settings">
+      <div class="sec-row"><h2>Integrations</h2></div>
+      <div class="int-grid">
+        <div class="int-card">
+          <div class="ik">⚡ Make / Zapier</div>
+          <p>Connect Make.com or Zapier scenarios via webhooks. Paste your scenario trigger URLs in the Ad Manager and Lead Engine panels.</p>
+          <div class="form-group">
+            <label>Master Webhook (all events)</label>
+            <input type="url" id="master-webhook" placeholder="https://hook.make.com/..." oninput="saveCfg()">
+          </div>
+        </div>
+        <div class="int-card">
+          <div class="ik">📧 Email</div>
+          <p>Route lead notifications &amp; follow-ups through your email provider. Use a tool like Make to relay from this webhook.</p>
+          <div class="form-group">
+            <label>Notification Email</label>
+            <input type="email" id="notif-email" placeholder="mylesjwells@mtservicesusa.com" oninput="saveCfg()">
+          </div>
+        </div>
+        <div class="int-card">
+          <div class="ik">💬 SMS (Twilio / OpenPhone)</div>
+          <p>Fire SMS sequences via Make + Twilio or OpenPhone. Configure number and auth in your Make scenario.</p>
+          <div class="form-group">
+            <label>SMS Webhook</label>
+            <input type="url" id="sms-webhook" placeholder="https://hook.make.com/..." oninput="saveCfg()">
+          </div>
+        </div>
+        <div class="int-card">
+          <div class="ik">📊 Google Analytics</div>
+          <p>Paste your GA4 Measurement ID to track form fills and conversions from your M&T website.</p>
+          <div class="form-group">
+            <label>GA4 Measurement ID</label>
+            <input type="text" id="ga-id" placeholder="G-XXXXXXXXXX" oninput="saveCfg()">
+          </div>
+        </div>
+        <div class="int-card">
+          <div class="ik">⭐ Review Requests</div>
+          <p>Auto-send Google review requests after confirmed jobs. Connect via Make to your Google Business Profile.</p>
+          <div class="form-group">
+            <label>Review Request Webhook</label>
+            <input type="url" id="review-webhook" placeholder="https://hook.make.com/..." oninput="saveCfg()">
+          </div>
+        </div>
+        <div class="int-card">
+          <div class="ik">🤖 AI Receptionist</div>
+          <p>Link your M&T AI receptionist to push conversations into this dashboard as leads automatically.</p>
+          <div class="form-group">
+            <label>AI Receptionist Webhook</label>
+            <input type="url" id="ai-webhook" placeholder="https://hook.make.com/..." oninput="saveCfg()">
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:1rem">
+        <div class="card-head"><h3>Notifications</h3></div>
+        <div style="padding:1rem;display:flex;flex-direction:column;gap:.8rem">
+          <label style="display:flex;align-items:center;gap:.7rem;cursor:pointer;font-size:.82rem">
+            <label class="toggle"><input type="checkbox" id="notif-new-lead" onchange="saveCfg()" checked><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
+            Notify me on every new lead
+          </label>
+          <label style="display:flex;align-items:center;gap:.7rem;cursor:pointer;font-size:.82rem">
+            <label class="toggle"><input type="checkbox" id="notif-booking" onchange="saveCfg()" checked><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
+            Notify me on every new booking
+          </label>
+          <label style="display:flex;align-items:center;gap:.7rem;cursor:pointer;font-size:.82rem">
+            <label class="toggle"><input type="checkbox" id="notif-daily" onchange="saveCfg()"><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
+            Daily summary digest (via email webhook)
+          </label>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:.7rem">
+        <button class="btn btn-ghost" onclick="exportCSV()">⬇ Export Leads CSV</button>
+        <button class="btn btn-ghost" onclick="exportApptCSV()">⬇ Export Appointments CSV</button>
+        <button class="btn btn-ghost" style="color:var(--red);border-color:rgba(239,68,68,.3)" onclick="clearData()">🗑 Clear All Data</button>
+      </div>
+    </div>
+
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<!-- ADD LEAD MODAL -->
+<div class="modal-bg hidden" id="lead-modal">
+  <div class="modal">
+    <h3>Add New Lead</h3>
+    <div class="form-grid">
+      <div class="form-group"><label>First &amp; Last Name *</label><input type="text" id="l-name" placeholder="Jane Smith"></div>
+      <div class="form-group"><label>Phone</label><input type="tel" id="l-phone" placeholder="(318) 555-0100"></div>
+      <div class="form-group"><label>Email</label><input type="email" id="l-email" placeholder="jane@example.com"></div>
+      <div class="form-group"><label>Business Name</label><input type="text" id="l-biz" placeholder="Smith HVAC"></div>
+      <div class="form-group"><label>Source</label>
+        <select id="l-source"><option>Google Ads</option><option>Meta Ads</option><option>Google Organic</option><option>Referral</option><option>Cold Outreach</option><option>AI Receptionist</option><option>Other</option></select>
+      </div>
+      <div class="form-group"><label>Status</label>
+        <select id="l-status"><option value="new">New</option><option value="contacted">Contacted</option><option value="qualified">Qualified</option><option value="booked">Booked</option></select>
+      </div>
+      <div class="form-group full"><label>Notes</label><textarea id="l-notes" placeholder="Any context…" style="min-height:60px"></textarea></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="closeModal('lead-modal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveLead()">Save Lead</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADD APPOINTMENT MODAL -->
+<div class="modal-bg hidden" id="appt-modal">
+  <div class="modal">
+    <h3>Add Appointment</h3>
+    <div class="form-grid">
+      <div class="form-group"><label>Client Name *</label><input type="text" id="a-name" placeholder="Jane Smith"></div>
+      <div class="form-group"><label>Phone</label><input type="tel" id="a-phone" placeholder="(318) 555-0100"></div>
+      <div class="form-group"><label>Date *</label><input type="date" id="a-date"></div>
+      <div class="form-group"><label>Time *</label><input type="time" id="a-time"></div>
+      <div class="form-group full"><label>Service / Notes</label><input type="text" id="a-notes" placeholder="e.g. Website consultation"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="closeModal('appt-modal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveAppt()">Save Appointment</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── AUTH ───────────────────────────────────────────────────────────────────
+function unlock(){
+  const v=document.getElementById('pw').value;
+  if(v==='mt2025'){
+    sessionStorage.setItem('mt_agent_auth','1');
+    document.getElementById('lock').classList.add('hidden');
+    document.getElementById('app').classList.remove('hidden');
+    init();
+  } else {
+    document.getElementById('pw-err').textContent='Incorrect password.';
+  }
+}
+if(sessionStorage.getItem('mt_agent_auth')==='1'){
+  document.getElementById('lock').classList.add('hidden');
+  document.getElementById('app').classList.remove('hidden');
+}
+
+// ─── DATA ────────────────────────────────────────────────────────────────────
+function load(k,d=[]){try{return JSON.parse(localStorage.getItem(k))||d}catch{return d}}
+function save(k,v){localStorage.setItem(k,JSON.stringify(v))}
+let leads=load('mt_leads',[]);
+let appts=load('mt_appts',[]);
+let agentState=load('mt_agents',{ads:false,leads:false,booker:false});
+let cfg=load('mt_cfg',{});
+
+// ─── CONFIG PERSISTENCE ──────────────────────────────────────────────────────
+function saveCfg(){
+  const ids=['g-budget','g-geo','g-cid','g-webhook','m-budget','m-audience','m-acct','m-webhook',
+    'email-template','sms-template','lead-webhook','crm-webhook','cal-link','conf-sms','remind-sms',
+    'booking-webhook','master-webhook','notif-email','sms-webhook','ga-id','review-webhook','ai-webhook',
+    'notif-new-lead','notif-booking','notif-daily'];
+  const o={};
+  ids.forEach(id=>{
+    const el=document.getElementById(id);
+    if(!el)return;
+    o[id]=el.type==='checkbox'?el.checked:el.value;
+  });
+  save('mt_cfg',o);
+}
+function loadCfg(){
+  const o=load('mt_cfg',{});
+  Object.entries(o).forEach(([id,val])=>{
+    const el=document.getElementById(id);
+    if(!el)return;
+    if(el.type==='checkbox')el.checked=val;
+    else el.value=val||'';
+  });
+}
+
+// ─── CLOCK ───────────────────────────────────────────────────────────────────
+function tick(){
+  const el=document.getElementById('live-time');
+  if(el) el.textContent=new Date().toLocaleTimeString();
+}
+
+// ─── PANELS ──────────────────────────────────────────────────────────────────
+const panelTitles={overview:'Overview',ads:'Ad Manager',leads:'Lead Engine',booker:'Auto-Booker',settings:'Settings'};
+function showPanel(name){
+  ['overview','ads','leads','booker','settings'].forEach(p=>{
+    document.getElementById('panel-'+p).classList.toggle('hidden',p!==name);
+    const nav=document.getElementById('nav-'+p);
+    if(nav) nav.classList.toggle('active',p===name);
+  });
+  document.getElementById('panel-title').textContent=panelTitles[name]||name;
+  if(name==='leads')renderKanban(),renderLeadTable();
+  if(name==='booker')renderAppts();
+  if(name==='overview')renderOverviewLeads();
+}
+
+// ─── AGENT TOGGLES ───────────────────────────────────────────────────────────
+function toggleAgent(name,on){
+  agentState[name]=on;
+  save('mt_agents',agentState);
+  updateAgentUI(name);
+  logActivity(on?`${capitalize(name)} agent activated`:`${capitalize(name)} agent paused`,'var(--teal)');
+  updateSystemStatus();
+}
+function updateAgentUI(name){
+  const on=agentState[name];
+  const pulse=document.getElementById('pulse-'+name);
+  const stat=document.getElementById('stat-'+name);
+  const dot=document.getElementById('dot-'+name);
+  const nav=document.getElementById('nav-'+name);
+  if(pulse){pulse.classList.toggle('live',on)}
+  if(stat)stat.textContent=on?'Running — watching for triggers':'Offline';
+  if(dot)dot.style.background=on?'var(--green)':'var(--border2)';
+  if(nav)nav.classList.toggle('on',on);
+  const toggle=document.getElementById('toggle-'+name);
+  if(toggle)toggle.checked=on;
+}
+function updateSystemStatus(){
+  const anyOn=Object.values(agentState).some(Boolean);
+  const allOn=Object.values(agentState).every(Boolean);
+  const el=document.getElementById('system-status');
+  if(allOn){el.textContent='● All Agents Live';el.style.background='rgba(34,197,94,.12)';el.style.color='var(--green)';el.style.borderColor='rgba(34,197,94,.2)'}
+  else if(anyOn){el.textContent='● Some Agents Active';el.style.background='rgba(234,179,8,.12)';el.style.color='var(--yellow)';el.style.borderColor='rgba(234,179,8,.2)'}
+  else{el.textContent='○ All Agents Offline';el.style.background='rgba(107,127,163,.08)';el.style.color='var(--muted)';el.style.borderColor='var(--border)'}
+}
+
+// ─── METRICS ─────────────────────────────────────────────────────────────────
+function updateMetrics(){
+  const now=new Date();
+  const weekAgo=new Date(now-7*864e5);
+  const monthAgo=new Date(now-30*864e5);
+  const total=leads.length;
+  const weekLeads=leads.filter(l=>new Date(l.added)>weekAgo).length;
+  const booked=leads.filter(l=>l.status==='booked').length;
+  const weekBooked=leads.filter(l=>l.status==='booked'&&new Date(l.added)>weekAgo).length;
+  const budgetG=parseFloat(document.getElementById('g-budget')?.value||0);
+  const budgetM=parseFloat(document.getElementById('m-budget')?.value||0);
+  const monthSpend=(budgetG+budgetM)*30;
+  const cpl=total>0&&monthSpend>0?(monthSpend/total).toFixed(2):null;
+  document.getElementById('m-leads').textContent=total;
+  document.getElementById('m-leads-d').textContent=`↑ ${weekLeads} this week`;
+  document.getElementById('m-appts').textContent=booked;
+  document.getElementById('m-appts-d').textContent=`↑ ${weekBooked} this week`;
+  document.getElementById('m-spend').textContent=monthSpend>0?`$${monthSpend.toLocaleString()}`:'$0';
+  document.getElementById('m-cpl').textContent=cpl?`$${cpl}`:'—';
+  // booker stats
+  const weekAppts=appts.filter(a=>new Date(a.date+' '+a.time)>weekAgo).length;
+  const monthAppts=appts.filter(a=>new Date(a.date+' '+a.time)>monthAgo).length;
+  const bw=document.getElementById('b-week');
+  const bm=document.getElementById('b-month');
+  if(bw)bw.textContent=weekAppts;
+  if(bm)bm.textContent=monthAppts;
+}
+
+// ─── ACTIVITY FEED ───────────────────────────────────────────────────────────
+function logActivity(msg,color='var(--accent)'){
+  const feed=document.getElementById('activity-feed');
+  if(!feed)return;
+  const item=document.createElement('div');
+  item.className='feed-item';
+  const now=new Date();
+  item.innerHTML=`<div class="feed-dot" style="background:${color}"></div><div><div class="feed-msg">${msg}</div><div class="feed-time">${now.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</div></div>`;
+  feed.insertBefore(item,feed.firstChild);
+  while(feed.children.length>30)feed.removeChild(feed.lastChild);
+}
+
+// ─── LEADS ───────────────────────────────────────────────────────────────────
+const STATUS_PILLS={
+  new:'<span class="pill-status pill-new">New</span>',
+  contacted:'<span class="pill-status pill-contacted">Contacted</span>',
+  qualified:'<span class="pill-status pill-qualified">Qualified</span>',
+  booked:'<span class="pill-status pill-booked">Booked</span>',
+};
+function openAddLead(){document.getElementById('lead-modal').classList.remove('hidden')}
+function saveLead(){
+  const name=document.getElementById('l-name').value.trim();
+  if(!name){alert('Name is required');return}
+  const lead={
+    id:Date.now(),name,
+    phone:document.getElementById('l-phone').value.trim(),
+    email:document.getElementById('l-email').value.trim(),
+    biz:document.getElementById('l-biz').value.trim(),
+    source:document.getElementById('l-source').value,
+    status:document.getElementById('l-status').value,
+    notes:document.getElementById('l-notes').value.trim(),
+    added:new Date().toISOString()
+  };
+  leads.unshift(lead);
+  save('mt_leads',leads);
+  logActivity(`New lead: ${name} (${lead.source})`, 'var(--green)');
+  closeModal('lead-modal');
+  renderKanban();renderLeadTable();renderOverviewLeads();updateMetrics();
+  ['l-name','l-phone','l-email','l-biz','l-notes'].forEach(id=>document.getElementById(id).value='');
+}
+function deleteLead(id){
+  leads=leads.filter(l=>l.id!==id);
+  save('mt_leads',leads);
+  renderKanban();renderLeadTable();renderOverviewLeads();updateMetrics();
+}
+function advanceLead(id){
+  const order=['new','contacted','qualified','booked'];
+  const l=leads.find(x=>x.id===id);
+  if(!l)return;
+  const i=order.indexOf(l.status);
+  if(i<order.length-1){l.status=order[i+1];save('mt_leads',leads);logActivity(`${l.name} → ${capitalize(l.status)}`,'var(--yellow)');renderKanban();renderLeadTable();renderOverviewLeads();updateMetrics();}
+}
+function renderLeadTable(){
+  const q=(document.getElementById('lead-search')?.value||'').toLowerCase();
+  const filtered=leads.filter(l=>!q||(l.name+l.biz+l.source+l.phone+l.email).toLowerCase().includes(q));
+  const tbody=document.getElementById('lead-table-body');
+  if(!tbody)return;
+  if(!filtered.length){tbody.innerHTML=`<tr><td colspan="8" style="text-align:center;color:var(--muted);padding:1.5rem">No leads found</td></tr>`;return}
+  tbody.innerHTML=filtered.map(l=>`
+    <tr>
+      <td><strong>${esc(l.name)}</strong></td>
+      <td>${esc(l.phone||'—')}</td>
+      <td>${esc(l.email||'—')}</td>
+      <td>${esc(l.biz||'—')}</td>
+      <td>${esc(l.source)}</td>
+      <td>${STATUS_PILLS[l.status]||l.status}</td>
+      <td>${fmtDate(l.added)}</td>
+      <td><button class="btn btn-ghost" style="font-size:.68rem;padding:.2rem .5rem" onclick="advanceLead(${l.id})">→ Next</button> <button class="btn btn-ghost" style="font-size:.68rem;padding:.2rem .5rem;color:var(--red)" onclick="deleteLead(${l.id})">✕</button></td>
+    </tr>`).join('');
+}
+function renderOverviewLeads(){
+  const tbody=document.getElementById('overview-lead-body');
+  if(!tbody)return;
+  if(!leads.length){tbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:1.5rem">No leads yet — add your first lead above</td></tr>';return}
+  tbody.innerHTML=leads.slice(0,8).map(l=>`
+    <tr>
+      <td><strong>${esc(l.name)}</strong></td>
+      <td>${esc(l.biz||'—')}</td>
+      <td>${esc(l.source)}</td>
+      <td>${STATUS_PILLS[l.status]||l.status}</td>
+      <td>${fmtDate(l.added)}</td>
+    </tr>`).join('');
+}
+
+// ─── KANBAN ──────────────────────────────────────────────────────────────────
+const STAGES=[
+  {key:'new',label:'New',color:'var(--accent)'},
+  {key:'contacted',label:'Contacted',color:'var(--purple)'},
+  {key:'qualified',label:'Qualified',color:'var(--yellow)'},
+  {key:'booked',label:'Booked',color:'var(--green)'},
+];
+function renderKanban(){
+  const board=document.getElementById('kanban-board');
+  if(!board)return;
+  board.innerHTML=STAGES.map(s=>{
+    const items=leads.filter(l=>l.status===s.key);
+    return `<div class="kanban-col">
+      <div class="kanban-head">
+        <div class="col-name"><span style="width:8px;height:8px;border-radius:50%;background:${s.color};display:inline-block"></span>${s.label}</div>
+        <span class="col-count">${items.length}</span>
+      </div>
+      <div class="kanban-body">
+        ${items.length?items.map(l=>`
+          <div class="kcard" onclick="advanceLead(${l.id})">
+            <div class="kname">${esc(l.name)}</div>
+            <div class="kbiz">${esc(l.biz||l.source)}</div>
+            <div class="ktime">${fmtDate(l.added)}</div>
+          </div>`).join(''):'<div style="color:var(--muted);font-size:.73rem;padding:.3rem .2rem">Empty</div>'}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ─── APPOINTMENTS ─────────────────────────────────────────────────────────────
+function openAddAppt(){document.getElementById('appt-modal').classList.remove('hidden')}
+function saveAppt(){
+  const name=document.getElementById('a-name').value.trim();
+  const date=document.getElementById('a-date').value;
+  const time=document.getElementById('a-time').value;
+  if(!name||!date||!time){alert('Name, date, and time are required');return}
+  const appt={id:Date.now(),name,phone:document.getElementById('a-phone').value.trim(),date,time,notes:document.getElementById('a-notes').value.trim(),added:new Date().toISOString()};
+  appts.push(appt);
+  appts.sort((a,b)=>new Date(a.date+' '+a.time)-new Date(b.date+' '+b.time));
+  save('mt_appts',appts);
+  logActivity(`Appointment booked: ${name} on ${fmtDate2(date)} at ${fmt12(time)}`,'var(--teal)');
+  closeModal('appt-modal');
+  renderAppts();updateMetrics();
+  ['a-name','a-phone','a-date','a-time','a-notes'].forEach(id=>document.getElementById(id).value='');
+}
+function deleteAppt(id){
+  appts=appts.filter(a=>a.id!==id);
+  save('mt_appts',appts);
+  renderAppts();updateMetrics();
+}
+function renderAppts(){
+  const list=document.getElementById('appt-list');
+  const noEl=document.getElementById('no-appts');
+  if(!list)return;
+  const future=appts.filter(a=>new Date(a.date+'T'+a.time)>=new Date(Date.now()-3600000));
+  if(!future.length){list.innerHTML='';if(noEl)noEl.classList.remove('hidden');return}
+  if(noEl)noEl.classList.add('hidden');
+  list.innerHTML=future.map(a=>{
+    const d=new Date(a.date+'T'+a.time);
+    return `<div class="appt-item">
+      <div class="appt-left">
+        <div class="appt-time">
+          <div class="at-day">${d.toLocaleDateString('en',{weekday:'short'})}</div>
+          <div class="at-hr">${fmt12(a.time)}</div>
+        </div>
+        <div class="appt-info">
+          <div class="an">${esc(a.name)}</div>
+          <div class="ab">${esc(a.notes||a.phone||'No notes')} · ${fmtDate2(a.date)}</div>
+        </div>
+      </div>
+      <div class="appt-right">
+        <span class="pill-status pill-booked">Confirmed</span>
+        <button class="btn btn-ghost" style="font-size:.68rem;padding:.2rem .5rem;color:var(--red)" onclick="deleteAppt(${a.id})">✕</button>
+      </div>
+    </div>`;
+  }).join('');
+  document.getElementById('b-remind').textContent=appts.length;
+}
+
+// ─── EXPORT ──────────────────────────────────────────────────────────────────
+function exportCSV(){
+  const rows=[['Name','Phone','Email','Business','Source','Status','Notes','Added'],...leads.map(l=>[l.name,l.phone,l.email,l.biz,l.source,l.status,l.notes,l.added])];
+  dlCSV(rows,'mt-leads.csv');
+}
+function exportApptCSV(){
+  const rows=[['Name','Phone','Date','Time','Notes','Added'],...appts.map(a=>[a.name,a.phone,a.date,a.time,a.notes,a.added])];
+  dlCSV(rows,'mt-appointments.csv');
+}
+function dlCSV(rows,fname){
+  const csv=rows.map(r=>r.map(c=>`"${String(c||'').replace(/"/g,'""')}"`).join(',')).join('\n');
+  const a=document.createElement('a');
+  a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
+  a.download=fname;a.click();
+}
+function clearData(){
+  if(!confirm('Delete ALL leads, appointments, and agent data? This cannot be undone.'))return;
+  localStorage.clear();
+  leads=[];appts=[];agentState={ads:false,leads:false,booker:false};
+  init();logActivity('All data cleared','var(--red)');
+}
+
+// ─── MODAL ───────────────────────────────────────────────────────────────────
+function closeModal(id){document.getElementById(id).classList.add('hidden')}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){['lead-modal','appt-modal'].forEach(id=>closeModal(id))}});
+
+// ─── HELPERS ─────────────────────────────────────────────────────────────────
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function capitalize(s){return s.charAt(0).toUpperCase()+s.slice(1)}
+function fmtDate(iso){try{return new Date(iso).toLocaleDateString('en',{month:'short',day:'numeric'})}catch{return '—'}}
+function fmtDate2(d){try{const[y,m,day]=d.split('-');return `${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+m-1]} ${+day}`}catch{return d}}
+function fmt12(t){try{let[h,m]=t.split(':');const ampm=+h>=12?'pm':'am';h=+h%12||12;return `${h}:${m}${ampm}`}catch{return t}}
+
+// ─── INIT ────────────────────────────────────────────────────────────────────
+function init(){
+  loadCfg();
+  Object.keys(agentState).forEach(updateAgentUI);
+  updateSystemStatus();
+  updateMetrics();
+  renderOverviewLeads();
+  renderKanban();
+  renderLeadTable();
+  renderAppts();
+  setInterval(tick,1000);tick();
+  setInterval(updateMetrics,5000);
+}
+if(sessionStorage.getItem('mt_agent_auth')==='1'){init()}
+</script>
+</body>
+</html>
