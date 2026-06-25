@@ -13,6 +13,30 @@
   .legal strong { color: var(--text); }
   .price-highlight { font-family: var(--display); font-weight: 800; font-size: 1.1rem; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
   .section-rule { border: none; border-top: 1px solid var(--border); margin: 1.4rem 0 1rem; }
+  @media print {
+    .doc-title{font-size:1.2rem!important}
+    .eyebrow{display:none!important}
+    .pad{padding:.15in .36in .15in!important}
+    .doc-head{margin-bottom:.28rem!important;padding-bottom:.28rem!important}
+    h2.sec{margin:.28rem 0 .1rem!important;font-size:.74rem!important}
+    h2.sec::before{display:none!important}
+    .clause{margin:.08rem 0!important}
+    .clause-num{font-size:.65rem!important;margin-bottom:.04rem!important;display:inline!important}
+    .clause-num::after{content:" — "!important}
+    .legal{font-size:.67rem!important;line-height:1.3!important}
+    p.legal{margin:.04rem 0!important}
+    .section-rule{margin:.18rem 0 .1rem!important}
+    .grid{gap:.2rem!important}
+    .card{padding:.3rem .42rem!important}
+    .card .k{font-size:.65rem!important}
+    table{font-size:.68rem!important;margin:.1rem 0!important}
+    th,td{padding:.16rem .24rem!important}
+    .price-highlight{font-size:.75rem!important}
+    p.fine{font-size:.6rem!important;padding:.24rem .36rem!important;margin-top:.22rem!important}
+    .signrow{margin-top:.28rem!important;gap:.8rem!important}
+    .sigline{margin-top:.52rem!important;font-size:.68rem!important}
+    .doc-foot{margin-top:.2rem!important;padding-top:.18rem!important;font-size:.68rem!important}
+  }
 </style>
 </head>
 <body>
@@ -48,8 +72,8 @@
       </div>
       <div class="doc-meta">
         <div class="site">mtservicesusa.com</div>
-        <div>Contract No. <span class="ph">[####]</span></div>
-        <div>Effective: <span class="ph">[Date]</span></div>
+        <div>Contract No. <span class="ph" contenteditable="true" spellcheck="false">[####]</span></div>
+        <div>Effective: <span class="ph" contenteditable="true" spellcheck="false">[Date]</span></div>
       </div>
     </div>
 
@@ -71,11 +95,11 @@
       <div class="card">
         <div class="k">Client ("You")</div>
         <p class="legal" style="margin-top:.4rem">
-          Business name: <span class="ph">[___________________________]</span><br>
-          Contact name: <span class="ph">[___________________________]</span><br>
-          Address: <span class="ph">[___________________________]</span><br>
-          Email: <span class="ph">[___________________________]</span><br>
-          Phone: <span class="ph">[___________________________]</span>
+          Business name: <span class="ph" contenteditable="true" spellcheck="false">[___________________________]</span><br>
+          Contact name: <span class="ph" contenteditable="true" spellcheck="false">[___________________________]</span><br>
+          Address: <span class="ph" contenteditable="true" spellcheck="false">[___________________________]</span><br>
+          Email: <span class="ph" contenteditable="true" spellcheck="false">[___________________________]</span><br>
+          Phone: <span class="ph" contenteditable="true" spellcheck="false">[___________________________]</span>
         </p>
       </div>
     </div>
@@ -90,7 +114,7 @@
       <thead><tr><th style="width:2rem"></th><th>Service</th><th class="num">Setup / One-Time</th><th class="num">Monthly Retainer</th></tr></thead>
       <tbody>
         <tr>
-          <td style="text-align:center"><span class="ph">[ ]</span></td>
+          <td style="text-align:center"><span class="ph" contenteditable="true" spellcheck="false">[ ]</span></td>
           <td>
             <strong>Website Design &amp; Build</strong><br>
             <span class="fine">Custom, mobile-first website — includes design, build, SEO, copywriting, contact forms, hosting setup, and ongoing maintenance. Client owns files outright on final payment.</span>
@@ -99,7 +123,7 @@
           <td class="num">—</td>
         </tr>
         <tr>
-          <td style="text-align:center"><span class="ph">[ ]</span></td>
+          <td style="text-align:center"><span class="ph" contenteditable="true" spellcheck="false">[ ]</span></td>
           <td>
             <strong>AI Virtual Receptionist</strong><br>
             <span class="fine">Custom-trained AI agent that answers inquiries, books appointments, and captures leads 24/7. Includes setup, training, integration, review monitoring, and monthly performance report.</span>
@@ -111,8 +135,8 @@
       <tfoot>
         <tr class="tot">
           <td colspan="2" class="num">Total</td>
-          <td class="num"><span class="g">$<span class="ph">[amount]</span></span></td>
-          <td class="num"><span class="g">$<span class="ph">[amount]</span>/mo</span></td>
+          <td class="num"><span class="g">$<span class="ph" contenteditable="true" spellcheck="false">[amount]</span></span></td>
+          <td class="num"><span class="g">$<span class="ph" contenteditable="true" spellcheck="false">[amount]</span>/mo</span></td>
         </tr>
       </tfoot>
     </table>
