@@ -42,6 +42,15 @@ img { max-width: 100%; display: block; }
     radial-gradient(1200px 600px at 80% -10%, rgba(59,130,246,.10), transparent 60%),
     radial-gradient(900px 500px at 0% 20%, rgba(139,92,246,.10), transparent 55%),
     var(--bg); }
+/* animated liquid black-metal background video (from Kling) */
+#metal-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+/* keep brand orbs as a faint colour tint over the metal */
+.bg-fx .orb { opacity: .16; mix-blend-mode: screen; }
+.bg-fx .grid-overlay { opacity: .5; }
+/* subtle darken so headings stay crisp over bright specular swirls */
+.bg-readability { position: absolute; inset: 0; pointer-events: none; background:
+    radial-gradient(1200px 760px at 50% 6%, rgba(7,11,22,.66), transparent 62%),
+    linear-gradient(180deg, rgba(7,11,22,.50), rgba(7,11,22,.18) 32%, rgba(7,11,22,.50)); }
 .orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: .5; animation: float 18s ease-in-out infinite; }
 .orb-1 { width: 480px; height: 480px; background: #2563eb; top: -120px; right: -80px; }
 .orb-2 { width: 420px; height: 420px; background: #06d6c4; bottom: -140px; left: -100px; animation-delay: -6s; }
