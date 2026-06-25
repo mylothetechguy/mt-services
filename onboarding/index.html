@@ -3,82 +3,182 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Client Portal — M&amp;T Services</title>
-<meta name="robots" content="noindex">
-<link rel="stylesheet" href="onboarding.css">
+<title>M&amp;T Services — Document Hub</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
-  .portal{max-width:980px;margin:0 auto;padding:2.5rem 1.2rem 4rem}
-  .phead{text-align:center;margin-bottom:2.2rem}
-  .phead .doc-title{font-size:clamp(2.4rem,8vw,4rem)}
-  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(260px,100%),1fr));gap:1.1rem}
-  .dcard{display:block;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));
-    border:1px solid var(--border);border-radius:16px;padding:1.3rem;transition:transform .2s,border-color .2s,box-shadow .2s;position:relative;overflow:hidden}
-  .dcard:hover{transform:translateY(-3px);border-color:var(--border-strong);box-shadow:var(--shadow)}
-  .dcard .num{font-family:var(--display);font-weight:800;font-size:.85rem;color:#04111f;background:var(--grad);
-    width:30px;height:30px;border-radius:50%;display:grid;place-items:center;margin-bottom:.8rem}
-  .dcard h3{font-family:var(--display);font-weight:700;font-size:1.15rem;margin-bottom:.3rem}
-  .dcard p{font-size:.88rem;color:var(--muted);margin:0}
-  .dcard .go{margin-top:.9rem;font-family:var(--display);font-weight:700;font-size:.82rem;color:var(--accent-2)}
-  .brandtop{display:flex;align-items:center;justify-content:center;gap:.7rem;margin-bottom:1.2rem}
-  .brandtop .logo{width:54px;height:54px}
-  .brandtop .bname{font-family:var(--display);font-weight:800;font-size:1.5rem;letter-spacing:-.02em}
-  .brandtop .amp{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+:root{
+  --bg:#070b16;--panel:rgba(14,21,48,.85);--border:rgba(255,255,255,.10);
+  --border-s:rgba(255,255,255,.18);--text:#eef2fb;--muted:#9aa6c2;--faint:#6b769a;
+  --accent:#3b82f6;--teal:#06d6c4;
+  --grad:linear-gradient(120deg,#3b82f6 0%,#22b0d8 55%,#06d6c4 100%);
+  --font:'Inter',-apple-system,sans-serif;--display:'Sora',var(--font);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100vh;background:#05080f;color:var(--text);font-family:var(--font);-webkit-font-smoothing:antialiased}
+
+/* Background video */
+.bg{position:fixed;inset:0;z-index:0;overflow:hidden}
+.bg video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.bg::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(80% 60% at 50% 0%,rgba(7,11,22,.6),rgba(5,8,15,.94) 75%),
+             linear-gradient(180deg,rgba(5,8,15,.65),rgba(5,8,15,.96))}
+
+/* ---- Lock screen ---- */
+#lock{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:1.5rem;
+  background:rgba(5,8,15,.97);backdrop-filter:blur(12px)}
+.lock-box{width:100%;max-width:360px;text-align:center}
+.lock-logo{width:56px;height:56px;margin:0 auto 1rem}
+.lock-box h1{font-family:var(--display);font-weight:800;font-size:1.4rem;letter-spacing:-.02em;margin-bottom:.35rem}
+.lock-box p{color:var(--muted);font-size:.9rem;margin-bottom:1.4rem}
+.lock-field{width:100%;background:rgba(255,255,255,.05);border:1px solid var(--border-s);
+  border-radius:10px;padding:.75rem 1rem;color:var(--text);font-size:1rem;font-family:var(--font);
+  outline:none;text-align:center;letter-spacing:.12em}
+.lock-field:focus{border-color:var(--teal)}
+.lock-btn{margin-top:.75rem;width:100%;padding:.8rem;border:none;border-radius:10px;
+  background:var(--grad);color:#04111f;font-family:var(--display);font-weight:700;font-size:.95rem;cursor:pointer}
+.lock-btn:active{opacity:.85}
+.lock-err{margin-top:.6rem;color:#f87171;font-size:.82rem;min-height:1.2em}
+
+/* ---- Hub layout ---- */
+#hub{position:relative;z-index:1;max-width:700px;margin:0 auto;padding:2rem 1.2rem 4rem;display:none}
+
+/* Header */
+.hub-head{display:flex;align-items:center;gap:.8rem;margin-bottom:2.2rem;padding-bottom:1.4rem;
+  border-bottom:1px solid var(--border)}
+.hub-logo{width:40px;height:40px;flex:0 0 40px}
+.hub-title{font-family:var(--display);font-weight:800;font-size:1.15rem;letter-spacing:-.02em}
+.hub-title .amp{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hub-sub{font-size:.78rem;color:var(--faint);margin-top:.1rem}
+.lock-out{margin-left:auto;font-size:.78rem;color:var(--faint);cursor:pointer;
+  padding:.35rem .8rem;border:1px solid var(--border);border-radius:999px;background:none;color:var(--muted)}
+.lock-out:hover{border-color:var(--border-s);color:var(--text)}
+
+/* Sections */
+.section-label{font-family:var(--display);font-weight:700;font-size:.72rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--faint);margin:1.6rem 0 .65rem;
+  display:flex;align-items:center;gap:.5rem}
+.section-label::after{content:"";flex:1;height:1px;background:var(--border)}
+
+/* Doc rows */
+.doc-row{display:flex;align-items:center;gap:.9rem;padding:.85rem 1rem;
+  background:var(--panel);border:1px solid var(--border);border-radius:12px;
+  text-decoration:none;color:var(--text);margin-bottom:.5rem;
+  transition:border-color .18s,background .18s,transform .18s}
+.doc-row:hover{border-color:var(--border-s);background:rgba(14,21,48,.95);transform:translateX(3px)}
+.doc-num{font-family:var(--display);font-weight:800;font-size:.72rem;color:#04111f;
+  background:var(--grad);width:26px;height:26px;border-radius:50%;
+  display:grid;place-items:center;flex:0 0 26px}
+.doc-info{flex:1;min-width:0}
+.doc-name{font-family:var(--display);font-weight:700;font-size:.95rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.doc-desc{font-size:.78rem;color:var(--muted);margin-top:.1rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.doc-arrow{color:var(--teal);font-size:.9rem;flex:0 0 auto}
+
+/* Footer */
+.hub-foot{margin-top:2rem;padding-top:1.2rem;border-top:1px solid var(--border);
+  text-align:center;font-size:.78rem;color:var(--faint)}
+.hub-foot a{color:var(--teal)}
 </style>
 </head>
 <body>
 
-<div class="metal-bg" aria-hidden="true">
+<div class="bg" aria-hidden="true">
   <video autoplay muted loop playsinline preload="auto" poster="../media/liquid-metal-poster.jpg">
     <source src="../media/liquid-metal-loop.mp4" type="video/mp4">
   </video>
-  <div class="veil"></div>
 </div>
 
-<div class="portal">
-  <div class="phead">
-    <div class="brandtop">
-      <svg class="logo" viewBox="0 0 1080 1080" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#3b82f6"/><stop offset=".55" stop-color="#22b0d8"/><stop offset="1" stop-color="#06d6c4"/>
-        </linearGradient></defs>
-        <circle cx="540" cy="540" r="497" fill="none" stroke="url(#lg)" stroke-width="34"/>
-        <text x="540" y="620" text-anchor="middle" font-family="Sora,Arial" font-weight="800" font-size="360" letter-spacing="-12" fill="url(#lg)">M&amp;T</text>
-      </svg>
-      <div class="bname">M<span class="amp">&amp;</span>T Services</div>
+<!-- Lock screen -->
+<div id="lock">
+  <div class="lock-box">
+    <svg class="lock-logo" viewBox="0 0 1080 1080" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#3b82f6"/><stop offset=".55" stop-color="#22b0d8"/><stop offset="1" stop-color="#06d6c4"/>
+      </linearGradient></defs>
+      <circle cx="540" cy="540" r="497" fill="none" stroke="url(#lg)" stroke-width="34"/>
+      <text x="540" y="620" text-anchor="middle" font-family="Sora,Arial" font-weight="800" font-size="360" letter-spacing="-12" fill="url(#lg)">M&amp;T</text>
+    </svg>
+    <h1>M<span style="background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent">&amp;</span>T Services</h1>
+    <p>Document Hub — private access only</p>
+    <input class="lock-field" id="passInput" type="password" placeholder="Access code" autocomplete="off">
+    <button class="lock-btn" id="passBtn">Enter</button>
+    <div class="lock-err" id="lockErr"></div>
+  </div>
+</div>
+
+<!-- Hub content -->
+<div id="hub">
+
+  <div class="hub-head">
+    <svg class="hub-logo" viewBox="0 0 1080 1080" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs><linearGradient id="lg2" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#3b82f6"/><stop offset=".55" stop-color="#22b0d8"/><stop offset="1" stop-color="#06d6c4"/>
+      </linearGradient></defs>
+      <circle cx="540" cy="540" r="497" fill="none" stroke="url(#lg2)" stroke-width="34"/>
+      <text x="540" y="620" text-anchor="middle" font-family="Sora,Arial" font-weight="800" font-size="360" letter-spacing="-12" fill="url(#lg2)">M&amp;T</text>
+    </svg>
+    <div>
+      <div class="hub-title">M<span class="amp">&amp;</span>T Services</div>
+      <div class="hub-sub">Document Hub</div>
     </div>
-    <span class="eyebrow">Welcome, <span class="fill">[Client Name]</span></span>
-    <h1 class="doc-title">Your <span class="g">Client Portal</span></h1>
-    <p class="lead" style="margin:.9rem auto 0">Everything for your project with M&amp;T Services, in one place. Open any document, then use <strong>Save as PDF</strong> to keep your own copy.</p>
+    <button class="lock-out" onclick="lockOut()">Lock</button>
   </div>
 
-  <h2 class="sec" style="margin-top:0">Before the sale</h2>
-  <div class="cards">
-    <a class="dcard" href="competitor-analysis.html"><div class="num">1</div><h3>Competitor Analysis</h3><p>Show a prospect how they compare to local rivals on Google.</p><div class="go">Open &rarr;</div></a>
-    <a class="dcard" href="proposal.html"><div class="num">2</div><h3>Proposal</h3><p>Your recommendation, packages, and investment options.</p><div class="go">Open &rarr;</div></a>
-    <a class="dcard" href="service-menu.html"><div class="num">3</div><h3>Service Menu &amp; Pricing</h3><p>Every service, add-on, and AI Employee with pricing.</p><div class="go">Open &rarr;</div></a>
-    <a class="dcard" href="case-study.html"><div class="num">4</div><h3>Case Study</h3><p>Proof — a past client's challenge, work, and results.</p><div class="go">Open &rarr;</div></a>
+  <div class="section-label">Before the sale</div>
+  <a class="doc-row" href="competitor-analysis.html"><div class="doc-num">1</div><div class="doc-info"><div class="doc-name">Competitor Analysis</div><div class="doc-desc">Local Google visibility vs. rivals</div></div><span class="doc-arrow">→</span></a>
+  <a class="doc-row" href="proposal.html"><div class="doc-num">2</div><div class="doc-info"><div class="doc-name">Proposal</div><div class="doc-desc">Packages and investment options</div></div><span class="doc-arrow">→</span></a>
+  <a class="doc-row" href="service-menu.html"><div class="doc-num">3</div><div class="doc-info"><div class="doc-name">Service Menu &amp; Pricing</div><div class="doc-desc">Every service and add-on with pricing</div></div><span class="doc-arrow">→</span></a>
+  <a class="doc-row" href="case-study.html"><div class="doc-num">4</div><div class="doc-info"><div class="doc-name">Case Study</div><div class="doc-desc">Past client results and testimonial</div></div><span class="doc-arrow">→</span></a>
+
+  <div class="section-label">Onboarding</div>
+  <a class="doc-row" href="welcome.html"><div class="doc-num">5</div><div class="doc-info"><div class="doc-name">Welcome</div><div class="doc-desc">Roadmap, what we need, and next steps</div></div><span class="doc-arrow">→</span></a>
+  <a class="doc-row" href="agreement.html"><div class="doc-num">6</div><div class="doc-info"><div class="doc-name">Client Agreement</div><div class="doc-desc">Scope, timeline, payments in plain language</div></div><span class="doc-arrow">→</span></a>
+  <a class="doc-row" href="contract.html"><div class="doc-num">7</div><div class="doc-info"><div class="doc-name">Official Contract</div><div class="doc-desc">Legally binding terms, pricing, and signatures</div></div><span class="doc-arrow">→</span></a>
+  <a class="doc-row" href="invoice.html"><div class="doc-num">8</div><div class="doc-info"><div class="doc-name">Invoice (General)</div><div class="doc-desc">Itemized services — any project</div></div><span class="doc-arrow">→</span></a>
+  <a class="doc-row" href="invoice-ai-receptionist.html"><div class="doc-num">9</div><div class="doc-info"><div class="doc-name">Invoice — AI Receptionist</div><div class="doc-desc">$499.99 setup + $250/mo · includes Stripe QR</div></div><span class="doc-arrow">→</span></a>
+  <a class="doc-row" href="project-brief.html"><div class="doc-num">10</div><div class="doc-info"><div class="doc-name">Project Brief</div><div class="doc-desc">Client intake — goals, pages, access</div></div><span class="doc-arrow">→</span></a>
+  <a class="doc-row" href="asset-guide.html"><div class="doc-num">11</div><div class="doc-info"><div class="doc-name">Website &amp; AI Asset Guide</div><div class="doc-desc">Logins, how the AI works, requesting edits</div></div><span class="doc-arrow">→</span></a>
+
+  <div class="section-label">Ongoing</div>
+  <a class="doc-row" href="care-plan.html"><div class="doc-num">12</div><div class="doc-info"><div class="doc-name">Care Plan</div><div class="doc-desc">Monthly coverage and support SLAs</div></div><span class="doc-arrow">→</span></a>
+  <a class="doc-row" href="monthly-report.html"><div class="doc-num">13</div><div class="doc-info"><div class="doc-name">Monthly Report</div><div class="doc-desc">Leads, bookings, and revenue metrics</div></div><span class="doc-arrow">→</span></a>
+  <a class="doc-row" href="thank-you.html"><div class="doc-num">14</div><div class="doc-info"><div class="doc-name">Thank You</div><div class="doc-desc">Final deliverables and growth next steps</div></div><span class="doc-arrow">→</span></a>
+
+  <div class="hub-foot">
+    <a href="mailto:mylesjwells@mtservicesusa.com">mylesjwells@mtservicesusa.com</a> &middot; <a href="tel:+12705700790">(270) 570-0790</a> &middot; mtservicesusa.com
   </div>
 
-  <h2 class="sec">Onboarding</h2>
-  <div class="cards">
-    <a class="dcard" href="welcome.html"><div class="num">5</div><h3>Welcome</h3><p>Your roadmap, what we need, and what happens next.</p><div class="go">Open &rarr;</div></a>
-    <a class="dcard" href="agreement.html"><div class="num">6</div><h3>Client Agreement</h3><p>Scope, timeline, payments, and ownership — in plain language.</p><div class="go">Open &rarr;</div></a>
-    <a class="dcard" href="contract.html"><div class="num">7</div><h3>Official Contract</h3><p>Legally binding service contract with all terms, pricing, and signatures.</p><div class="go">Open &rarr;</div></a>
-    <a class="dcard" href="invoice.html"><div class="num">8</div><h3>Invoice (General)</h3><p>Itemized services and easy ways to pay — any project.</p><div class="go">Open &rarr;</div></a>
-    <a class="dcard" href="invoice-ai-receptionist.html"><div class="num">9</div><h3>Invoice — AI Receptionist</h3><p>Dedicated invoice: $499.99 setup + $250/mo retainer. Includes Stripe QR.</p><div class="go">Open &rarr;</div></a>
-    <a class="dcard" href="project-brief.html"><div class="num">10</div><h3>Project Brief</h3><p>Intake form — goals, pages, content, and access we need.</p><div class="go">Open &rarr;</div></a>
-    <a class="dcard" href="asset-guide.html"><div class="num">11</div><h3>Website &amp; AI Asset Guide</h3><p>Logins, how your AI works, and requesting edits.</p><div class="go">Open &rarr;</div></a>
-  </div>
-
-  <h2 class="sec">Ongoing</h2>
-  <div class="cards">
-    <a class="dcard" href="care-plan.html"><div class="num">12</div><h3>Care Plan</h3><p>What your monthly plan covers and how to reach us.</p><div class="go">Open &rarr;</div></a>
-    <a class="dcard" href="monthly-report.html"><div class="num">13</div><h3>Monthly Report</h3><p>The leads, bookings, and revenue we drive each month.</p><div class="go">Open &rarr;</div></a>
-    <a class="dcard" href="thank-you.html"><div class="num">14</div><h3>Thank You</h3><p>Final deliverables and how to keep growing.</p><div class="go">Open &rarr;</div></a>
-  </div>
-
-  <p class="fine" style="text-align:center;margin-top:2.2rem">Need anything? <a href="mailto:mylesjwells@mtservicesusa.com">mylesjwells@mtservicesusa.com</a> · <a href="tel:+12705700790">(270) 570-0790</a> · mtservicesusa.com</p>
 </div>
 
+<script>
+  var PASS = "mt2025";
+  var KEY  = "mt_hub_auth";
+
+  function unlock(){
+    document.getElementById("lock").style.display = "none";
+    document.getElementById("hub").style.display  = "block";
+    sessionStorage.setItem(KEY,"1");
+  }
+  function lockOut(){
+    sessionStorage.removeItem(KEY);
+    document.getElementById("hub").style.display  = "none";
+    document.getElementById("lock").style.display = "flex";
+    document.getElementById("passInput").value = "";
+    document.getElementById("lockErr").textContent = "";
+  }
+  function attempt(){
+    var val = document.getElementById("passInput").value.trim();
+    if(val === PASS){ unlock(); }
+    else{ document.getElementById("lockErr").textContent = "Incorrect code."; document.getElementById("passInput").select(); }
+  }
+
+  // Auto-unlock if already authenticated this session
+  if(sessionStorage.getItem(KEY) === "1"){ unlock(); }
+
+  document.getElementById("passBtn").addEventListener("click", attempt);
+  document.getElementById("passInput").addEventListener("keydown", function(e){ if(e.key==="Enter") attempt(); });
+</script>
 </body>
 </html>
