@@ -130,3 +130,17 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
 .toolbar a,.toolbar button{font-family:var(--display);font-weight:700;font-size:.85rem;cursor:pointer;
   border-radius:999px;padding:.5rem 1rem;border:1px solid var(--border-strong);background:transparent;color:var(--text)}
 .toolbar .print{background:var(--grad);color:#04111f;border-color:transparent}
+
+/* ---- Mobile (screen only) ---- */
+@media screen and (max-width:860px){
+  .sheet{width:100%;min-height:unset;margin:0;border-radius:0;border-left:0;border-right:0}
+  .pad{padding:.9rem 1rem 1.2rem}
+  .doc-head{flex-direction:column;align-items:flex-start;gap:.6rem}
+  .doc-meta{text-align:left}
+  .doc-title{font-size:clamp(1.8rem,9vw,2.6rem)}
+  .g2,.g3{grid-template-columns:1fr}
+  .signrow{grid-template-columns:1fr;gap:1.2rem}
+  table{font-size:.82rem}
+  th,td{padding:.45rem .5rem}
+  .lead{font-size:.9rem}
+}
