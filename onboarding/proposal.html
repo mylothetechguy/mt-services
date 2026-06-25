@@ -6,7 +6,14 @@
 <title>Proposal — M&amp;T Services</title>
 <link rel="stylesheet" href="onboarding.css">
 <style>
+.prop-price{font-family:var(--display);font-weight:800;font-size:1.6rem;
+  background:var(--grad);-webkit-background-clip:text;background-clip:text;
+  color:transparent;margin:.4rem 0 .2rem}
+.prop-price-sub{font-size:1rem}
 @media print{
+  .prop-price{background:none!important;-webkit-background-clip:unset!important;
+    background-clip:unset!important;color:#22b0d8!important;font-size:1.3rem!important}
+
   .doc-title{font-size:1.25rem!important}
   .eyebrow{margin-bottom:.12rem!important}
   .pad{padding:.11in .36in .11in!important}
@@ -74,7 +81,7 @@
 
       <div class="card" style="border-color:var(--border-strong)">
         <div class="k">Website Build</div>
-        <div style="font-family:var(--display);font-weight:800;font-size:1.6rem;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;margin:.4rem 0 .2rem">$1,499</div>
+        <div class="prop-price">$1,499</div>
         <div class="fine" style="margin-bottom:.7rem">One-time · everything included</div>
         <ul style="margin-top:.3rem">
           <li>Custom design &amp; build</li>
@@ -89,7 +96,7 @@
 
       <div class="card" style="border-color:var(--border-strong)">
         <div class="k">AI Virtual Receptionist</div>
-        <div style="font-family:var(--display);font-weight:800;font-size:1.6rem;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;margin:.4rem 0 .2rem">$499 <span style="font-size:1rem">+ $250/mo</span></div>
+        <div class="prop-price">$499 <span class="prop-price-sub">+ $250/mo</span></div>
         <div class="fine" style="margin-bottom:.7rem">One-time setup · then monthly retainer</div>
         <ul style="margin-top:.3rem">
           <li>Custom-trained on your business</li>

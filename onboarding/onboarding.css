@@ -136,6 +136,17 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
     -webkit-print-color-adjust:exact;print-color-adjust:exact;
   }
   .sheet,.card,.box{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  /* Gradient text — background-clip:text goes invisible in PDF without this */
+  .amp,.g,.stat .v,.price-highlight,.eyebrow,.step .n,.pill,.tag{
+    -webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;
+  }
+  /* Fallback: if background-clip:text still fails, use solid accent color */
+  .amp{background:none!important;-webkit-background-clip:unset!important;background-clip:unset!important;color:#22b0d8!important}
+  .doc-title .g,.tot td .g{background:none!important;-webkit-background-clip:unset!important;background-clip:unset!important;color:#3b82f6!important}
+  .stat .v{background:none!important;-webkit-background-clip:unset!important;background-clip:unset!important;color:#3b82f6!important}
+  .price-highlight{background:none!important;-webkit-background-clip:unset!important;background-clip:unset!important;color:#22b0d8!important}
+  .step .n{background:linear-gradient(120deg,#3b82f6 0%,#22b0d8 55%,#06d6c4 100%)!important;color:#04111f!important}
+  .pill{background:linear-gradient(120deg,#3b82f6 0%,#22b0d8 55%,#06d6c4 100%)!important;color:#04111f!important}
   .pad{padding:.36in .46in .38in}
   .doc-head{margin-bottom:.6rem;padding-bottom:.55rem}
   .doc-title{font-size:1.9rem!important}
