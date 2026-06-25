@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Invoice — M&amp;T Services</title>
+<link rel="stylesheet" href="onboarding.css">
+</head>
+<body>
+
+<div class="metal-bg" aria-hidden="true">
+  <video autoplay muted loop playsinline preload="auto" poster="../media/liquid-metal-poster.jpg">
+    <source src="../media/liquid-metal-loop.mp4" type="video/mp4">
+  </video>
+  <div class="veil"></div>
+</div>
+
+<div class="toolbar no-print">
+  <a href="index.html">&larr; All documents</a>
+  <button class="print" onclick="window.print()">Save as PDF / Print</button>
+</div>
+
+<div class="sheet">
+  <div class="pad">
+
+    <div class="doc-head">
+      <div class="brand">
+        <svg class="logo" viewBox="0 0 1080 1080" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#3b82f6"/><stop offset=".55" stop-color="#22b0d8"/><stop offset="1" stop-color="#06d6c4"/>
+          </linearGradient></defs>
+          <circle cx="540" cy="540" r="497" fill="none" stroke="url(#lg)" stroke-width="34"/>
+          <text x="540" y="620" text-anchor="middle" font-family="Sora,Arial" font-weight="800" font-size="360" letter-spacing="-12" fill="url(#lg)">M&amp;T</text>
+        </svg>
+        <div>
+          <div class="bname">M<span class="amp">&amp;</span>T Services</div>
+          <div class="btag">Websites &amp; AI Assistants</div>
+        </div>
+      </div>
+      <div class="doc-meta">
+        <div class="site">mtservicesusa.com</div>
+        <div><span class="ph">[email]</span> · <span class="ph">[phone]</span></div>
+        <div>Bossier City, LA</div>
+      </div>
+    </div>
+
+    <span class="eyebrow">Invoice</span>
+    <h1 class="doc-title"><span class="g">Invoice</span></h1>
+
+    <div class="grid g3" style="margin-top:1.2rem">
+      <div class="card"><div class="k">Billed to</div><div class="v"><span class="ph">[Client Name]</span></div>
+        <p class="fine" style="margin:.3rem 0 0"><span class="ph">[Business · address · email · phone]</span></p></div>
+      <div class="card"><div class="k">Invoice #</div><div class="v"><span class="ph">[INV-0001]</span></div>
+        <p class="fine" style="margin:.3rem 0 0">Issued <span class="ph">[date]</span></p></div>
+      <div class="card"><div class="k">Due</div><div class="v"><span class="ph">[date]</span></div>
+        <p class="fine" style="margin:.3rem 0 0">Terms: <span class="ph">[Net 7 / Due on receipt]</span></p></div>
+    </div>
+
+    <h2 class="sec">Services</h2>
+    <table>
+      <thead>
+        <tr><th>Item / description</th><th class="num">Qty</th><th class="num">Rate</th><th class="num">Amount</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Website design &amp; build</strong><br><span class="fine">Modern, mobile-first site — <span class="ph">[# pages]</span></span></td><td class="num">1</td><td class="num">$<span class="ph">0.00</span></td><td class="num">$<span class="ph">0.00</span></td></tr>
+        <tr><td><strong>AI assistant / virtual receptionist</strong><br><span class="fine">Setup &amp; training on your business</span></td><td class="num">1</td><td class="num">$<span class="ph">0.00</span></td><td class="num">$<span class="ph">0.00</span></td></tr>
+        <tr><td><strong>SEO optimization</strong><br><span class="fine">Local search setup</span></td><td class="num">1</td><td class="num">$<span class="ph">0.00</span></td><td class="num">$<span class="ph">0.00</span></td></tr>
+        <tr><td><strong>Monthly plan</strong><br><span class="fine">Hosting, maintenance &amp; support — <span class="ph">[Website-as-a-Service]</span></span></td><td class="num">1</td><td class="num">$<span class="ph">0.00</span>/mo</td><td class="num">$<span class="ph">0.00</span></td></tr>
+      </tbody>
+      <tfoot>
+        <tr><td colspan="3" class="num">Subtotal</td><td class="num">$<span class="ph">0.00</span></td></tr>
+        <tr><td colspan="3" class="num">Discount</td><td class="num">$<span class="ph">0.00</span></td></tr>
+        <tr><td colspan="3" class="num">Tax <span class="fine">(<span class="ph">[%]</span>)</span></td><td class="num">$<span class="ph">0.00</span></td></tr>
+        <tr class="tot"><td colspan="3" class="num">Total due</td><td class="num"><span class="g">$<span class="ph">0.00</span></span></td></tr>
+      </tfoot>
+    </table>
+
+    <div class="grid g2" style="margin-top:1.2rem">
+      <div class="card">
+        <div class="k">How to pay</div>
+        <ul style="margin-top:.5rem">
+          <li>Card / Apple Pay: <span class="fill">[payment link]</span></li>
+          <li>Bank transfer: <span class="ph">[account name / details]</span></li>
+          <li>Zelle / CashApp: <span class="ph">[handle]</span></li>
+        </ul>
+      </div>
+      <div class="card" style="display:flex;align-items:center;justify-content:center;text-align:center">
+        <div>
+          <div style="width:96px;height:96px;border:1px dashed var(--border-strong);border-radius:12px;display:grid;place-items:center;margin:0 auto .5rem;color:var(--faint);font-size:.7rem">QR code</div>
+          <div class="fine">Scan to pay instantly</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="box">
+      <span class="pill">Terms</span>
+      <p class="fine" style="margin-top:.5rem">Payment due by the date above. Monthly plans renew automatically and are cancel-anytime with notice. Work begins once the deposit clears. Thank you for your business — we can't wait to get started.</p>
+    </div>
+
+    <div class="doc-foot">
+      <div><span class="cta-line">Questions about this invoice?</span> <span class="ph">[email]</span></div>
+      <div>M&amp;T Services · mtservicesusa.com</div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
