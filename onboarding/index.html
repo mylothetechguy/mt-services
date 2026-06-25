@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Client Portal — M&amp;T Services</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="onboarding.css">
+<style>
+  .portal{max-width:980px;margin:0 auto;padding:2.5rem 1.2rem 4rem}
+  .phead{text-align:center;margin-bottom:2.2rem}
+  .phead .doc-title{font-size:clamp(2.4rem,8vw,4rem)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.1rem}
+  .dcard{display:block;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));
+    border:1px solid var(--border);border-radius:16px;padding:1.3rem;transition:transform .2s,border-color .2s,box-shadow .2s;position:relative;overflow:hidden}
+  .dcard:hover{transform:translateY(-3px);border-color:var(--border-strong);box-shadow:var(--shadow)}
+  .dcard .num{font-family:var(--display);font-weight:800;font-size:.85rem;color:#04111f;background:var(--grad);
+    width:30px;height:30px;border-radius:50%;display:grid;place-items:center;margin-bottom:.8rem}
+  .dcard h3{font-family:var(--display);font-weight:700;font-size:1.15rem;margin-bottom:.3rem}
+  .dcard p{font-size:.88rem;color:var(--muted);margin:0}
+  .dcard .go{margin-top:.9rem;font-family:var(--display);font-weight:700;font-size:.82rem;color:var(--accent-2)}
+  .brandtop{display:flex;align-items:center;justify-content:center;gap:.7rem;margin-bottom:1.2rem}
+  .brandtop .logo{width:54px;height:54px}
+  .brandtop .bname{font-family:var(--display);font-weight:800;font-size:1.5rem;letter-spacing:-.02em}
+  .brandtop .amp{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+</style>
+</head>
+<body>
+
+<div class="metal-bg" aria-hidden="true">
+  <video autoplay muted loop playsinline preload="auto" poster="../media/liquid-metal-poster.jpg">
+    <source src="../media/liquid-metal-loop.mp4" type="video/mp4">
+  </video>
+  <div class="veil"></div>
+</div>
+
+<div class="portal">
+  <div class="phead">
+    <div class="brandtop">
+      <svg class="logo" viewBox="0 0 1080 1080" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#3b82f6"/><stop offset=".55" stop-color="#22b0d8"/><stop offset="1" stop-color="#06d6c4"/>
+        </linearGradient></defs>
+        <circle cx="540" cy="540" r="497" fill="none" stroke="url(#lg)" stroke-width="34"/>
+        <text x="540" y="620" text-anchor="middle" font-family="Sora,Arial" font-weight="800" font-size="360" letter-spacing="-12" fill="url(#lg)">M&amp;T</text>
+      </svg>
+      <div class="bname">M<span class="amp">&amp;</span>T Services</div>
+    </div>
+    <span class="eyebrow">Welcome, <span class="fill">[Client Name]</span></span>
+    <h1 class="doc-title">Your <span class="g">Client Portal</span></h1>
+    <p class="lead" style="margin:.9rem auto 0">Everything for your project with M&amp;T Services, in one place. Open any document, then use <strong>Save as PDF</strong> to keep your own copy.</p>
+  </div>
+
+  <h2 class="sec" style="margin-top:0">Before the sale</h2>
+  <div class="cards">
+    <a class="dcard" href="competitor-analysis.html"><div class="num">1</div><h3>Competitor Analysis</h3><p>Show a prospect how they compare to local rivals on Google.</p><div class="go">Open &rarr;</div></a>
+    <a class="dcard" href="proposal.html"><div class="num">2</div><h3>Proposal</h3><p>Your recommendation, packages, and investment options.</p><div class="go">Open &rarr;</div></a>
+    <a class="dcard" href="service-menu.html"><div class="num">3</div><h3>Service Menu &amp; Pricing</h3><p>Every service, add-on, and AI Employee with pricing.</p><div class="go">Open &rarr;</div></a>
+    <a class="dcard" href="case-study.html"><div class="num">4</div><h3>Case Study</h3><p>Proof — a past client's challenge, work, and results.</p><div class="go">Open &rarr;</div></a>
+  </div>
+
+  <h2 class="sec">Onboarding</h2>
+  <div class="cards">
+    <a class="dcard" href="welcome.html"><div class="num">5</div><h3>Welcome</h3><p>Your roadmap, what we need, and what happens next.</p><div class="go">Open &rarr;</div></a>
+    <a class="dcard" href="agreement.html"><div class="num">6</div><h3>Client Agreement</h3><p>Scope, timeline, payments, and ownership — in plain language.</p><div class="go">Open &rarr;</div></a>
+    <a class="dcard" href="invoice.html"><div class="num">7</div><h3>Invoice</h3><p>Your itemized services and easy ways to pay.</p><div class="go">Open &rarr;</div></a>
+    <a class="dcard" href="project-brief.html"><div class="num">8</div><h3>Project Brief</h3><p>Intake form — goals, pages, content, and access we need.</p><div class="go">Open &rarr;</div></a>
+    <a class="dcard" href="asset-guide.html"><div class="num">9</div><h3>Website &amp; AI Asset Guide</h3><p>Logins, how your AI works, and requesting edits.</p><div class="go">Open &rarr;</div></a>
+  </div>
+
+  <h2 class="sec">Ongoing</h2>
+  <div class="cards">
+    <a class="dcard" href="care-plan.html"><div class="num">10</div><h3>Care Plan</h3><p>What your monthly plan covers and how to reach us.</p><div class="go">Open &rarr;</div></a>
+    <a class="dcard" href="monthly-report.html"><div class="num">11</div><h3>Monthly Report</h3><p>The leads, bookings, and revenue we drive each month.</p><div class="go">Open &rarr;</div></a>
+    <a class="dcard" href="thank-you.html"><div class="num">12</div><h3>Thank You</h3><p>Final deliverables and how to keep growing.</p><div class="go">Open &rarr;</div></a>
+  </div>
+
+  <p class="fine" style="text-align:center;margin-top:2.2rem">Need anything? <a href="mailto:mylesjwells@mtservicesusa.com">mylesjwells@mtservicesusa.com</a> · <a href="tel:+12705700790">(270) 570-0790</a> · mtservicesusa.com</p>
+</div>
+
+</body>
+</html>
