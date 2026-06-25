@@ -5,6 +5,34 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Invoice — M&amp;T Services</title>
 <link rel="stylesheet" href="onboarding.css">
+<style>
+/* Editable placeholders */
+.ph[contenteditable]{
+  outline:none;
+  border-bottom:1px dashed rgba(6,214,196,.4);
+  padding:0 3px;cursor:text;min-width:1ch;
+  display:inline-block;transition:background .15s;
+}
+.ph[contenteditable]:hover{background:rgba(6,214,196,.07);border-radius:3px}
+.ph[contenteditable]:focus{background:rgba(6,214,196,.12);border-radius:3px;color:var(--text);font-style:normal}
+
+/* Fit on one page */
+@media print{
+  .ph[contenteditable]{border-bottom:none!important;background:none!important}
+  .pad{padding:.38in .48in .38in!important}
+  .doc-head{margin-bottom:.6rem!important;padding-bottom:.6rem!important}
+  .doc-title{font-size:2rem!important}
+  h2.sec{margin:.8rem 0 .35rem!important}
+  .card{padding:.6rem .75rem!important}
+  .grid{gap:.45rem!important}
+  table{margin:.2rem 0!important;font-size:.84rem!important}
+  th,td{padding:.35rem .5rem!important}
+  p,ul,li{font-size:.86rem!important}
+  p.fine{font-size:.76rem!important}
+  .box{margin-top:.5rem!important;padding:.6rem .8rem!important}
+  .doc-foot{margin-top:.8rem!important;padding-top:.6rem!important}
+}
+</style>
 </head>
 <body>
 
@@ -47,13 +75,22 @@
     <span class="eyebrow">Invoice</span>
     <h1 class="doc-title"><span class="g">Invoice</span></h1>
 
-    <div class="grid g3" style="margin-top:1.2rem">
-      <div class="card"><div class="k">Billed to</div><div class="v"><span class="ph">[Client Name]</span></div>
-        <p class="fine" style="margin:.3rem 0 0"><span class="ph">[Business · address · email · phone]</span></p></div>
-      <div class="card"><div class="k">Invoice #</div><div class="v"><span class="ph">[INV-0001]</span></div>
-        <p class="fine" style="margin:.3rem 0 0">Issued <span class="ph">[date]</span></p></div>
-      <div class="card"><div class="k">Due</div><div class="v"><span class="ph">[date]</span></div>
-        <p class="fine" style="margin:.3rem 0 0">Terms: <span class="ph">[Net 7 / Due on receipt]</span></p></div>
+    <div class="grid g3" style="margin-top:.9rem">
+      <div class="card">
+        <div class="k">Billed to</div>
+        <div class="v"><span class="ph" contenteditable="true" spellcheck="false">Client Name</span></div>
+        <p class="fine" style="margin:.3rem 0 0"><span class="ph" contenteditable="true" spellcheck="false">Business · address · email · phone</span></p>
+      </div>
+      <div class="card">
+        <div class="k">Invoice #</div>
+        <div class="v"><span class="ph" contenteditable="true" spellcheck="false">INV-0001</span></div>
+        <p class="fine" style="margin:.3rem 0 0">Issued <span class="ph" contenteditable="true" spellcheck="false">date</span></p>
+      </div>
+      <div class="card">
+        <div class="k">Due</div>
+        <div class="v"><span class="ph" contenteditable="true" spellcheck="false">date</span></div>
+        <p class="fine" style="margin:.3rem 0 0">Terms: <span class="ph" contenteditable="true" spellcheck="false">Net 7 / Due on receipt</span></p>
+      </div>
     </div>
 
     <h2 class="sec">Services</h2>
@@ -62,37 +99,52 @@
         <tr><th>Item / description</th><th class="num">Qty</th><th class="num">Rate</th><th class="num">Amount</th></tr>
       </thead>
       <tbody>
-        <tr><td><strong>Website Design &amp; Build</strong><br><span class="fine">Custom design, SEO, copywriting, hosting setup &amp; ongoing maintenance</span></td><td class="num">1</td><td class="num">$1,499</td><td class="num">$<span class="ph">1,499</span></td></tr>
-        <tr><td><strong>AI Virtual Receptionist — Setup</strong><br><span class="fine">Custom-trained AI agent — answers, books &amp; captures leads 24/7</span></td><td class="num">1</td><td class="num">$499</td><td class="num">$<span class="ph">499</span></td></tr>
-        <tr><td><strong>AI Virtual Receptionist — Monthly Retainer</strong><br><span class="fine">Ongoing hosting, maintenance, retraining &amp; 24/7 uptime</span></td><td class="num"><span class="ph">[mo]</span></td><td class="num">$250/mo</td><td class="num">$<span class="ph">0.00</span></td></tr>
+        <tr>
+          <td><strong>Website Design &amp; Build</strong><br><span class="fine">Custom design, SEO, copywriting, hosting setup &amp; ongoing maintenance</span></td>
+          <td class="num">1</td>
+          <td class="num">$1,499</td>
+          <td class="num">$<span class="ph" contenteditable="true" spellcheck="false">1,499</span></td>
+        </tr>
+        <tr>
+          <td><strong>AI Virtual Receptionist — Setup</strong><br><span class="fine">Custom-trained AI agent — answers, books &amp; captures leads 24/7</span></td>
+          <td class="num">1</td>
+          <td class="num">$499</td>
+          <td class="num">$<span class="ph" contenteditable="true" spellcheck="false">499</span></td>
+        </tr>
+        <tr>
+          <td><strong>AI Virtual Receptionist — Monthly Retainer</strong><br><span class="fine">Ongoing hosting, maintenance, retraining &amp; 24/7 uptime</span></td>
+          <td class="num"><span class="ph" contenteditable="true" spellcheck="false">mo</span></td>
+          <td class="num">$250/mo</td>
+          <td class="num">$<span class="ph" contenteditable="true" spellcheck="false">0</span></td>
+        </tr>
       </tbody>
       <tfoot>
-        <tr><td colspan="3" class="num">Subtotal</td><td class="num">$<span class="ph">0.00</span></td></tr>
-        <tr><td colspan="3" class="num">Discount</td><td class="num">$<span class="ph">0.00</span></td></tr>
-        <tr><td colspan="3" class="num">Tax <span class="fine">(<span class="ph">[%]</span>)</span></td><td class="num">$<span class="ph">0.00</span></td></tr>
-        <tr class="tot"><td colspan="3" class="num">Total due</td><td class="num"><span class="g">$<span class="ph">0.00</span></span></td></tr>
+        <tr><td colspan="3" class="num">Subtotal</td><td class="num">$<span class="ph" contenteditable="true" spellcheck="false">0</span></td></tr>
+        <tr><td colspan="3" class="num">Discount</td><td class="num">$<span class="ph" contenteditable="true" spellcheck="false">0</span></td></tr>
+        <tr><td colspan="3" class="num">Tax <span class="fine">(<span class="ph" contenteditable="true" spellcheck="false">0%</span>)</span></td><td class="num">$<span class="ph" contenteditable="true" spellcheck="false">0</span></td></tr>
+        <tr class="tot"><td colspan="3" class="num">Total due</td><td class="num"><span class="g">$<span class="ph" contenteditable="true" spellcheck="false">0</span></span></td></tr>
       </tfoot>
     </table>
 
-    <div class="grid g2" style="margin-top:1.2rem">
+    <div class="grid g2" style="margin-top:.9rem">
       <div class="card">
         <div class="k">How to pay</div>
-        <ul style="margin-top:.5rem">
-          <li>Card / Apple Pay / Google Pay: <span class="ph">[payment link]</span></li>
-          <li>Bank transfer: <span class="ph">[account name / details]</span></li>
-          <li>Zelle / CashApp: <span class="ph">[handle]</span></li>
+        <ul style="margin-top:.4rem">
+          <li>Card / Apple Pay: <span class="ph" contenteditable="true" spellcheck="false">payment link</span></li>
+          <li>Zelle: <span class="ph" contenteditable="true" spellcheck="false">handle / number</span></li>
+          <li>CashApp: <span class="ph" contenteditable="true" spellcheck="false">$handle</span></li>
         </ul>
       </div>
       <div class="card">
         <div class="k">Notes</div>
-        <p class="fine" style="margin-top:.5rem">Work begins once the deposit clears. Reach out anytime with questions — we're here to help.</p>
-        <p class="fine" style="margin-top:.5rem"><a href="mailto:mylesjwells@mtservicesusa.com">mylesjwells@mtservicesusa.com</a><br><a href="tel:+12705700790">(270) 570-0790</a></p>
+        <p class="fine" style="margin-top:.4rem">Work begins once the deposit clears. Reach out anytime with questions — we're here to help.</p>
+        <p class="fine" style="margin-top:.4rem"><a href="mailto:mylesjwells@mtservicesusa.com">mylesjwells@mtservicesusa.com</a> · <a href="tel:+12705700790">(270) 570-0790</a></p>
       </div>
     </div>
 
     <div class="box">
       <span class="pill">Terms</span>
-      <p class="fine" style="margin-top:.5rem">Payment due by the date above. Monthly plans renew automatically and are cancel-anytime with notice. Work begins once the deposit clears. Thank you for your business — we can't wait to get started.</p>
+      <p class="fine" style="margin-top:.4rem">Payment due by the date above. Monthly plans renew automatically and are cancel-anytime with 30 days' notice. Work begins once the deposit clears. Thank you for your business.</p>
     </div>
 
     <div class="doc-foot">
