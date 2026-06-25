@@ -418,9 +418,12 @@
           </ul>
         </div>
 
-        <form class="contact-form reveal" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/success.html">
-          <input type="hidden" name="form-name" value="contact" />
-          <p class="hidden"><label>Don't fill this out: <input name="bot-field" /></label></p>
+        <form class="contact-form reveal" method="POST" action="https://formsubmit.co/mylothetechguy@gmail.com">
+          <input type="hidden" name="_subject" value="New lead from mtservicesusa.com" />
+          <input type="hidden" name="_next" value="https://mtservicesusa.com/success.html" />
+          <input type="hidden" name="_template" value="table" />
+          <input type="hidden" name="_captcha" value="false" />
+          <p class="hidden"><label>Don't fill this out: <input name="_honey" tabindex="-1" autocomplete="off" /></label></p>
           <div class="field">
             <label for="name">Name</label>
             <input id="name" name="name" type="text" required placeholder="Your name" />
