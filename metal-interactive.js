@@ -15,6 +15,7 @@
   // Belt-and-suspenders for inline muted autoplay (esp. iOS)
   v.muted = true; v.defaultMuted = true;
   v.setAttribute("muted", ""); v.setAttribute("playsinline", ""); v.setAttribute("webkit-playsinline", "");
+  try { v.playbackRate = 0.5; } catch (e) {}   // slow, hypnotic drift
 
   // Lighter source on phones
   if (mobile) {
